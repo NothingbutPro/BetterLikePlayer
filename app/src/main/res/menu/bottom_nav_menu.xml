@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/videor"
+        android:title="Video" />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/musicalnote"
+        android:title="Music" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/playlist"
+        android:title="Playlists" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/navigation_genere"
+        android:icon="@drawable/genere"
+        android:title="Playlists" />
+
+</menu>
