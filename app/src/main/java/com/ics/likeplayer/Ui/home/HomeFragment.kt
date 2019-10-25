@@ -12,19 +12,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 
-import android.database.Cursor
-import android.os.Environment
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ics.likeplayer.Adapter.AllDirectoriesAdapter
-import com.ics.likeplayer.Adapter.ListAdapter
+import com.ics.likeplayer.Adapter.MyAllVideosAdpter
 import com.ics.likeplayer.Model.PojoClass
 import com.ics.likeplayer.Model.DIrectories_Folders
 import com.ics.likeplayer.R
 import java.io.File
-import java.nio.file.Files
 import java.util.ArrayList
 
 
@@ -48,7 +45,7 @@ class HomeFragment : Fragment() {
     private lateinit var Allsdcardrec: RecyclerView
     private lateinit var sname: TextView
     private lateinit var arttist: TextView
-    private var listAdapter: ListAdapter? = null
+    private var myAllVideosAdpter: MyAllVideosAdpter? = null
     private var AllDirectoriesAdapter: AllDirectoriesAdapter? = null
 //    public
     //      var mp3Files = null;
@@ -105,10 +102,13 @@ class HomeFragment : Fragment() {
                     val DIrname = File(path).parentFile.name
                     val DIrAddress = File(path).parentFile.absolutePath
                     val DIrSOngs = File(path).parentFile.listFiles()
-                    if(DIrnames.equals(DIrSOngs.get(0).parentFile.name)) {
+                    if(DIrnames.equals(DIrSOngs.get(0).parentFile.name))
+                    {
 
                         p = cursor.position;
-                    }else{
+                    }
+                    else
+                    {
                         p=0;
                         DIrnames =DIrname
 
@@ -261,7 +261,7 @@ class HomeFragment : Fragment() {
 ////                                }
 ////
 ////
-////                                listAdapter = ListAdapter(activity, pojoClassArrayList)
+////                                myAllVideosAdpter = MyAllVideosAdpter(activity, pojoClassArrayList)
 ////                                //  mLayoutManager = LinearLayoutManager(context)
 ////                                Songrec.layoutManager = LinearLayoutManager(
 ////                                    activity,
@@ -270,7 +270,7 @@ class HomeFragment : Fragment() {
 ////                                )
 ////                                //    songrec.setLayoutManager(mLayoutManager)
 ////                                Songrec.setItemAnimator(DefaultItemAnimator())
-////                                Songrec.setAdapter(listAdapter)
+////                                Songrec.setAdapter(myAllVideosAdpter)
 ////                                fileuri = ""
 ////                            }else{
 ////
@@ -335,12 +335,12 @@ class HomeFragment : Fragment() {
 ////                }
 ////
 ////
-////                listAdapter = ListAdapter(activity, pojoClassArrayList)
+////                myAllVideosAdpter = MyAllVideosAdpter(activity, pojoClassArrayList)
 ////               //  mLayoutManager = LinearLayoutManager(context)
 ////                Songrec.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL ,false)
 ////            //    songrec.setLayoutManager(mLayoutManager)
 ////                Songrec.setItemAnimator(DefaultItemAnimator())
-////                Songrec.setAdapter(listAdapter)
+////                Songrec.setAdapter(myAllVideosAdpter)
 ////
 ////            }
 //
@@ -359,88 +359,88 @@ class HomeFragment : Fragment() {
 //
 //    }
 
-
-    private fun readmp3mediafiles(activity: FragmentActivity?) {
-        Toast.makeText(activity,"Called",Toast.LENGTH_LONG).show()
-
-        val contentResolver = context?.getContentResolver()
-        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val music = MediaStore.Audio.Media.IS_MUSIC + " != 0"
-        val sort = MediaStore.Audio.Media.ALBUM + " ASC"
-        val projection = arrayOf(
-            MediaStore.Audio.Albums.ALBUM_ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.DATA
-        )
-        val cursor = contentResolver?.query(uri, projection, music, null, sort)
-
-        if (cursor != null) {
-            //   Msg.log(String.valueOf(cursor.count))
-            Log.e("cusror" , "COunt is"+cursor.count)
-            if (cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    val path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
-                    val DIrname = File(path).parentFile.name
-                    val DIrAddress = File(path).parentFile.absolutePath
-                    val DIrSOngs = File(path).parentFile.listFiles()
-                     p  = cursor.position;
-//                    DIrnames =DIrname
-//                    paths =path
-//                    DIrAddresss =DIrAddress
-//                    DIrSOngss =DIrSOngs
-
-                 //   val DIrname = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME))
-                    val title =
-                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-                    Toast.makeText(activity,"Title is"+DIrname ,Toast.LENGTH_LONG).show()
-                    //for getting directories
-
-                    if (path != null && path!!.endsWith(".mp3")) {
-                        if(p ==0)
-                        {
-                            val   dir = DIrectories_Folders(DIrname ,DIrAddress, DIrSOngs.size.toString());
-                            DirectoriesList.add(cursor.position ,dir)
-                            Log.e("homefrag" , ""+DIrSOngs.get(cursor.position))
-                        }
-                        else{
-                            Log.e("homefrag else" , ""+DIrSOngs.get(cursor.position))
-                        }
-//                        DIrSOngs.forEach {
-//                            if(it.exists()) {
-//                                if(p ==0 && DIrname.equals(it.name))
-//                                Toast.makeText(activity, "got a song" +it.name, Toast.LENGTH_LONG).show();
-//                                song_name.set(0, title)
-//                                singer_name.set(0, DIrname)
-//                                time.set(0, songDuration)
-//                                sname.setText(title)
-//                                arttist.setText(artist)
-
-//                                p == 1;
-//                            }
+//
+//    private fun readmp3mediafiles(activity: FragmentActivity?) {
+//        Toast.makeText(activity,"Called",Toast.LENGTH_LONG).show()
+//
+//        val contentResolver = context?.getContentResolver()
+//        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+//        val music = MediaStore.Audio.Media.IS_MUSIC + " != 0"
+//        val sort = MediaStore.Audio.Media.ALBUM + " ASC"
+//        val projection = arrayOf(
+//            MediaStore.Audio.Albums.ALBUM_ID,
+//            MediaStore.Audio.Media.TITLE,
+//            MediaStore.Audio.Media.DATA
+//        )
+//        val cursor = contentResolver?.query(uri, projection, music, null, sort)
+//
+//        if (cursor != null) {
+//            //   Msg.log(String.valueOf(cursor.count))
+//            Log.e("cusror" , "COunt is"+cursor.count)
+//            if (cursor.count > 0) {
+//                while (cursor.moveToNext()) {
+//                    val path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
+//                    val DIrname = File(path).parentFile.name
+//                    val DIrAddress = File(path).parentFile.absolutePath
+//                    val DIrSOngs = File(path).parentFile.listFiles()
+//                     p  = cursor.position;
+////                    DIrnames =DIrname
+////                    paths =path
+////                    DIrAddresss =DIrAddress
+////                    DIrSOngss =DIrSOngs
+//
+//                 //   val DIrname = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME))
+//                    val title =
+//                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
+//                    Toast.makeText(activity,"Title is"+DIrname ,Toast.LENGTH_LONG).show()
+//                    //for getting directories
+//
+//                    if (path != null && path!!.endsWith(".mp3")) {
+//                        if(p ==0)
+//                        {
+//                            val   dir = DIrectories_Folders(DIrname ,DIrAddress, DIrSOngs.size.toString());
+//                            DirectoriesList.add(cursor.position ,dir)
+//                            Log.e("homefrag" , ""+DIrSOngs.get(cursor.position))
 //                        }
-
-                    }else{
-                        Log.e("homefrag else else wa" , ""+DIrSOngs.get(cursor.position))
-                    }
-
-                }
-                AllDirectoriesAdapter = AllDirectoriesAdapter(activity, DirectoriesList)
-                //  mLayoutManager = LinearLayoutManager(context)
-                Songrec.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-                //    songrec.setLayoutManager(mLayoutManager)
-                Songrec.setItemAnimator(DefaultItemAnimator())
-                Songrec.setAdapter(AllDirectoriesAdapter)
-            }
-
-            else{
-
-                Toast.makeText(activity,"Title is NOne",Toast.LENGTH_LONG).show()
-
-            }
-        }else{
-            Toast.makeText(activity,"Cursor is  is NOne",Toast.LENGTH_LONG).show()
-        }
-    }
+//                        else{
+//                            Log.e("homefrag else" , ""+DIrSOngs.get(cursor.position))
+//                        }
+////                        DIrSOngs.forEach {
+////                            if(it.exists()) {
+////                                if(p ==0 && DIrname.equals(it.name))
+////                                Toast.makeText(activity, "got a song" +it.name, Toast.LENGTH_LONG).show();
+////                                song_name.set(0, title)
+////                                singer_name.set(0, DIrname)
+////                                time.set(0, songDuration)
+////                                sname.setText(title)
+////                                arttist.setText(artist)
+//
+////                                p == 1;
+////                            }
+////                        }
+//
+//                    }else{
+//                        Log.e("homefrag else else wa" , ""+DIrSOngs.get(cursor.position))
+//                    }
+//
+//                }
+//                AllDirectoriesAdapter = AllDirectoriesAdapter(activity, DirectoriesList)
+//                //  mLayoutManager = LinearLayoutManager(context)
+//                Songrec.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+//                //    songrec.setLayoutManager(mLayoutManager)
+//                Songrec.setItemAnimator(DefaultItemAnimator())
+//                Songrec.setAdapter(AllDirectoriesAdapter)
+//            }
+//
+//            else{
+//
+//                Toast.makeText(activity,"Title is NOne",Toast.LENGTH_LONG).show()
+//
+//            }
+//        }else{
+//            Toast.makeText(activity,"Cursor is  is NOne",Toast.LENGTH_LONG).show()
+//        }
+//    }
 
 
 //    private fun readmediafiles() {

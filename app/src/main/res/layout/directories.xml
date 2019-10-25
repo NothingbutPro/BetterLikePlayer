@@ -11,14 +11,13 @@
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="wrap_content">-->
     <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/dircardviewround"
         android:orientation="horizontal"
-
         android:padding="5dp">
 
         <LinearLayout
@@ -46,6 +45,7 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/holo_orange_light"
                 android:textSize="20dp"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:textStyle="bold"/>
 
             </LinearLayout>

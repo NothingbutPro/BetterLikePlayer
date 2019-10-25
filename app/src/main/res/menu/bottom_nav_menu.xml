@@ -7,12 +7,12 @@
         android:title="Video" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigat_song"
         android:icon="@drawable/musicalnote"
         android:title="Music" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_palylist"
         android:icon="@drawable/playlist"
         android:title="Playlists" />
 
