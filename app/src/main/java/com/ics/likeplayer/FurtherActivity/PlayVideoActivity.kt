@@ -30,9 +30,11 @@ import com.google.android.exoplayer2.ExoPlayerFactory
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.opengl.Visibility
 import android.util.Log
 import android.view.ActionMode
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 
 
@@ -42,7 +44,10 @@ class PlayVideoActivity : AppCompatActivity(){
     private var closepos: Int =1
     private var StoporNot: Boolean =false
     private lateinit var simpleExoplayer: SimpleExoPlayer
-    private   lateinit  var   imagecloss: ImageView
+    private   lateinit  var   hideli: LinearLayout
+    private   lateinit  var   pipmode: LinearLayout
+    private   lateinit  var   mainli: LinearLayout
+    private   lateinit  var   imghideshow: ImageView
     private lateinit var mPictureInPictureParamsBuilder: PictureInPictureParams.Builder
     private var playbackPosition = 0L
     lateinit var vidview: SimpleExoPlayerView
@@ -52,7 +57,32 @@ class PlayVideoActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(com.ics.likeplayer.R.layout.activity_play_video)
         vidview = findViewById(com.ics.likeplayer.R.id.simpleExoPlayerView)
+        pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
+        hideli = findViewById(com.ics.likeplayer.R.id.hideli)
+        imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow)
+        mainli = findViewById(com.ics.likeplayer.R.id.mainli)
+//        mainli.visibility =View.GONE
         initializePlayer()
+        pipmode.setOnClickListener {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)){
+//                mainli.visibility =View.GONE
+                enterPIPMode()
+            } else {
+            Toast.makeText(this ,"Sorry not Allowed" , Toast.LENGTH_LONG).show()
+            }
+        }
+        imghideshow.setOnClickListener {
+            if(hideli.visibility == View.VISIBLE)
+            {
+                imghideshow.rotation = (-90).toFloat();
+                hideli.visibility =View.GONE
+
+            }else{
+                imghideshow.rotation = (90).toFloat();
+                hideli.visibility =View.VISIBLE
+            }
+        }
 //        supportActionBar?.hide()
 //         mediacontroller =  MediaController(this);
 //        mediacontroller.setAnchorView(vidview);
@@ -117,21 +147,23 @@ class PlayVideoActivity : AppCompatActivity(){
     }
 
     override fun onBackPressed(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-            && packageManager
-                .hasSystemFeature(
-                    PackageManager.FEATURE_PICTURE_IN_PICTURE)){
-
-            enterPIPMode()
-        } else {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+//            && packageManager
+//                .hasSystemFeature(
+//                    PackageManager.FEATURE_PICTURE_IN_PICTURE)){
+//
+//            enterPIPMode()
+//        } else {
+            simpleExoplayer.stop()
             super.onBackPressed()
-        }
+//        }
     }
         //FOr PIPs
         override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean,
                                                    newConfig: Configuration) {
             if (isInPictureInPictureMode) {
                 Toast.makeText(this , "You done it well",Toast.LENGTH_LONG).show()
+
                 // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
             } else {
                 if (StoporNot) {
@@ -152,11 +184,18 @@ class PlayVideoActivity : AppCompatActivity(){
 
     override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
         Log.e("Resume" , "called")
+
         super.onTopResumedActivityChanged(isTopResumedActivity)
     }
 
     override fun onPostResume() {
         Log.e("Post Resume" , "called")
+//        if(mainli.visibility == View.GONE)
+//        {
+//            mainli.visibility = View.VISIBLE
+//        }else if(mainli.visibility == View.VISIBLE){
+//            mainli.visibility = View.GONE
+//        }
         super.onPostResume()
     }
 
@@ -176,9 +215,16 @@ class PlayVideoActivity : AppCompatActivity(){
             videoPosition = simpleExoplayer.currentPosition
             vidview.useController = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
                 val params = PictureInPictureParams.Builder()
                 this.enterPictureInPictureMode(params.build())
                 Toast.makeText(this , "you are if ",Toast.LENGTH_LONG).show()
+//                if(mainli.visibility == View.GONE)
+//                {
+//                    mainli.visibility = View.VISIBLE
+//                }else if(mainli.visibility == View.VISIBLE){
+//                    mainli.visibility = View.GONE
+//                }
             } else {
                 Toast.makeText(this , "you are in else ",Toast.LENGTH_LONG).show()
                 this.enterPictureInPictureMode()
