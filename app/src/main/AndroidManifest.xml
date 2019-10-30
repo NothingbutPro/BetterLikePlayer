@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,19 @@
         <activity
             android:name=".FurtherActivity.PlayVideoActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            android:configChanges=
+                "screenSize|smallestScreenSize|screenLayout|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+<!--            <layout android:defaultHeight="500dp"-->
+<!--                android:defaultWidth="600dp"-->
+<!--                android:gravity="top|end"-->
+<!--                android:minHeight="450dp"-->
+<!--                android:minWidth="300dp" />-->
+
+
+        </activity>
         <activity android:name=".FurtherActivity.AllVideoActivity" />
         <activity android:name=".FurtherActivity.AllMp3Activities" />
         <activity android:name=".MainActivity" />
