@@ -62,8 +62,11 @@ public class ScreenshotManager {
         final int width = size.x, height = size.y;
 
         // start capture reader
-        final
-        ImageReader imageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1);
+        final Point windowSize = new Point();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getRealSize(windowSize);
+//         final ImageReader imageReader = ImageReader.newInstance(width, height, PixelFormat.RGBA_8888, 1);
+        ImageReader imageReader = ImageReader.newInstance(windowSize.x, windowSize.y, PixelFormat.RGBA_8888, 1);
         final VirtualDisplay virtualDisplay = mediaProjection.createVirtualDisplay(SCREENCAP_NAME, width, height, density, VIRTUAL_DISPLAY_FLAGS, imageReader.getSurface(), null, null);
         imageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
@@ -76,7 +79,7 @@ public class ScreenshotManager {
                         Image image = null;
                         Bitmap bitmap = null;
                         try {
-                            image = reader.acquireLatestImage();
+                            image = reader.acquireNextImage();
                             if (image != null) {
                                 Image.Plane[] planes = image.getPlanes();
                                 ByteBuffer buffer = planes[0].getBuffer();
@@ -84,7 +87,20 @@ public class ScreenshotManager {
                                 bitmap = Bitmap.createBitmap(width + rowPadding / pixelStride, height, Bitmap.Config.ARGB_8888);
                                 bitmap.copyPixelsFromBuffer(buffer);
                                 String path =  Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"myDirectory";
-                                MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Screen", "screen");
+
+                                // fix the extra width from Image
+                                // fix the extra width from Image
+                                Bitmap croppedBitmap;
+                                try {
+                                    croppedBitmap = Bitmap.createBitmap(bitmap, 0, 0, windowSize.x, windowSize.y);
+                                } catch (OutOfMemoryError e) {
+                                    Log.d(e.getLocalizedMessage(), "Out of memory when cropping bitmap of screen size");
+                                    croppedBitmap = bitmap;
+                                }
+                                if (croppedBitmap != bitmap) {
+                                    bitmap.recycle();
+                                }
+                                MediaStore.Images.Media.insertImage(context.getContentResolver(), croppedBitmap, "Screen", "screen");
                                 return bitmap;
                             }
                         } catch (Exception e) {
