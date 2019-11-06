@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_black"
     android:keepScreenOn="true"
+    tools:context=".FurtherActivity.PlayVideoActivity"
     android:minHeight="@dimen/size_two_hundred">
 
 <!--    <androidx.appcompat.widget.Toolbar-->
@@ -27,12 +28,16 @@
 <!--        android:orientation="vertical"-->
 <!--        >-->
 
-        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/simpleExoPlayerView"
             android:layout_width="match_parent"
+            app:auto_show="true"
+            app:controller_layout_id="@layout/likepalyercontrols"
+            app:player_layout_id="@layout/customexoplayerview"
+            app:repeat_toggle_modes="none"
             android:layout_height="match_parent"
-            app:controller_layout_id="@layout/exo_playback_control_view"
-            app:player_layout_id="@layout/exo_simple_player_view"
+            app:surface_type="texture_view"
+            app:use_controller="true"
             app:resize_mode="fixed_width"
             tools:layout_editor_absoluteX="45dp"
             tools:layout_editor_absoluteY="178dp" />
@@ -52,6 +57,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:id="@+id/mainli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,11 +81,10 @@
                 android:id="@+id/mute"
                 android:layout_width="@dimen/size_thirty_five"
                 android:layout_height="@dimen/size_thirty_five"
-                android:layout_margin="5dp"
-
+                android:layout_margin="4dp"
                 android:background="@drawable/drawable_rounded_transparent"
                 android:padding="@dimen/size_ten"
-                android:src="@drawable/drawable_volume_selector"
+                android:src="@drawable/soundmute"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,7 +92,7 @@
                 android:id="@+id/hideli"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+               >
 
                 <ImageView
                     android:id="@+id/screenshot"
@@ -97,7 +102,7 @@
 
                     android:background="@drawable/drawable_rounded_transparent"
                     android:padding="@dimen/size_ten"
-                    android:src="@drawable/drawable_volume_selector"
+                    android:src="@drawable/screenshot"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,8 +126,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textAlignment="center"
                         android:text="Go PIP "
-                        android:textAlignment="center"></TextView>
+                        android:textColor="#000">
+
+                    </TextView>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -150,7 +159,6 @@
                     android:layout_width="@dimen/size_thirty_five"
                     android:layout_height="@dimen/size_thirty_five"
                     android:layout_margin="5dp"
-
                     android:background="@drawable/drawable_rounded_transparent"
                     android:padding="@dimen/size_ten"
                     android:src="@drawable/drawable_volume_selector"
@@ -163,30 +171,14 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/hideshow"
                 android:padding="@dimen/size_ten"
+                android:background="@drawable/drawable_rounded_transparent"
+                android:src="@drawable/hideshow"
                 android:rotation="90"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
-<!--    </LinearLayout>-->
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".FurtherActivity.PlayVideoActivity">-->
-
-
-<!--    <VideoView-->
-<!--        android:id="@+id/vidview"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--       >-->
-
-
-<!--    </VideoView>-->
-<!--</LinearLayout>-->

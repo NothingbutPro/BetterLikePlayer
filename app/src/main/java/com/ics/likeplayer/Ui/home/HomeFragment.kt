@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
 //                        }
 
                     }else{
-                        Log.e("homefrag else else wa" , ""+DIrSOngs.get(p))
+                        Log.e("homefrag else else wa" , "else DIrSOngs.get(p)")
                     }
                 }
                 AllDirectoriesAdapter = AllDirectoriesAdapter(activity, DirectoriesList)
@@ -450,9 +450,3 @@ class HomeFragment : Fragment() {
 
 }
 
-
-
-//private operator fun Nothing?.iterator(): Iterator<String> {
-//    return  iterator()
-//
-//}

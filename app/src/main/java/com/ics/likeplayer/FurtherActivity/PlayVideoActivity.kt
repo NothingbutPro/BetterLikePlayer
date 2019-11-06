@@ -1,45 +1,51 @@
 package com.ics.likeplayer.FurtherActivity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PictureInPictureParams
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.*
+import android.hardware.display.VirtualDisplay
+import android.media.ImageReader
+import android.media.projection.MediaProjection
+import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.MediaController
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray
-
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView
 
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Build
-import android.util.Rational
+import android.os.Environment
+import android.provider.MediaStore
 
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.opengl.Visibility
 import android.util.Log
-import android.view.ActionMode
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.TextureView
+import android.view.WindowManager
+import android.widget.*
+import com.google.android.exoplayer2.ui.PlayerView
+import com.ics.likeplayer.MainActivity
+import com.ics.likeplayer.ScreenshotManager
+import com.mindorks.Screenshot
+import kotlinx.android.synthetic.main.activity_play_video.*
+import java.io.File
+import java.io.OutputStream
 
 
-class PlayVideoActivity : AppCompatActivity(){
-
+class PlayVideoActivity : AppCompatActivity()
+{
+    private val REQUEST_ID: Int = 1
     private var videoPosition: Long =0
     private var closepos: Int =1
     private var StoporNot: Boolean =false
@@ -47,22 +53,32 @@ class PlayVideoActivity : AppCompatActivity(){
     private   lateinit  var   hideli: LinearLayout
     private   lateinit  var   pipmode: LinearLayout
     private   lateinit  var   mainli: LinearLayout
+    private   lateinit  var   simplelin: LinearLayout
     private   lateinit  var   imghideshow: ImageView
+    private   lateinit  var   screenshot: ImageView
     private lateinit var mPictureInPictureParamsBuilder: PictureInPictureParams.Builder
     private var playbackPosition = 0L
-    lateinit var vidview: SimpleExoPlayerView
+    lateinit var vidview: PlayerView
     lateinit var myvideo: String
     lateinit var mediacontroller: MediaController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.ics.likeplayer.R.layout.activity_play_video)
         vidview = findViewById(com.ics.likeplayer.R.id.simpleExoPlayerView)
+        screenshot = findViewById(com.ics.likeplayer.R.id.screenshot)
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
         hideli = findViewById(com.ics.likeplayer.R.id.hideli)
+        simplelin = findViewById(com.ics.likeplayer.R.id.simplelin)
         imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow)
         mainli = findViewById(com.ics.likeplayer.R.id.mainli)
 //        mainli.visibility =View.GONE
         initializePlayer()
+        simplelin.setOnClickListener {
+//            Toast.makeText(this ,"Sorry not Allowed" , Toast.LENGTH_LONG).show()
+        }
+        screenshot.setOnClickListener {
+            takeScreenshot(vidview);
+        }
         pipmode.setOnClickListener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
                 && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)){
@@ -70,6 +86,17 @@ class PlayVideoActivity : AppCompatActivity(){
                 enterPIPMode()
             } else {
             Toast.makeText(this ,"Sorry not Allowed" , Toast.LENGTH_LONG).show()
+                enterPIPMode()
+//                if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        !Settings.canDrawOverlays(this)
+//
+//                    } else {
+//                        TODO("VERSION.SDK_INT < M")
+//
+//                    }) {
+//                    intent  = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+//                    startActivityForResult(intent, 0);
+//                }
             }
         }
         imghideshow.setOnClickListener {
@@ -78,7 +105,9 @@ class PlayVideoActivity : AppCompatActivity(){
                 imghideshow.rotation = (-90).toFloat();
                 hideli.visibility =View.GONE
 
-            }else{
+            }
+            else
+            {
                 imghideshow.rotation = (90).toFloat();
                 hideli.visibility =View.VISIBLE
             }
@@ -101,8 +130,46 @@ class PlayVideoActivity : AppCompatActivity(){
 
     }
 
+    @SuppressLint("NewApi")
+    private fun takeScreenshot(vidview: PlayerView) {
+        ScreenshotManager.INSTANCE.requestScreenshotPermission(this, REQUEST_ID);
+
+//    try {
+//        croppedBitmap = Bitmap.createBitmap(bitmap, 0, 0, windowSize.x, windowSize.y);
+//    } catch (OutOfMemoryError e) {
+//        Log.d("hey", "Out of memory when cropping bitmap of screen size");
+//        croppedBitmap = bitmap;
+//    }
+//    if (croppedBitmap != bitmap) {
+//        bitmap.recycle();
+//    }
+
+//        var view = this.getWindow().getDecorView();
+//        view.setDrawingCacheEnabled(true);
+//        view.buildDrawingCache();
+//        val b1 = view.getDrawingCache();
+//        val frame =  Rect();
+//        this.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+//        val statusBarHeight = frame.top;
+//
+//        //Find the screen dimensions to create bitmap in the same size.
+//        val width = getWindow().getWindowManager().getDefaultDisplay().width
+//        val height = getWindow().getWindowManager().getDefaultDisplay().height
+//
+//        val b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
+//        view.destroyDrawingCache();
+//         val dir = Environment.getExternalStorageDirectory().absolutePath+File.separator+"myDirectory";
+//     val view =   window.decorView
+//    //create folder
+//    val folder =  File(dir); //folder name
+//    folder.mkdirs();
+//        val window =  Timeline.Window();
+//        MediaStore.Images.Media.insertImage(contentResolver, b, "Screen", "screen");
+
+    }
+
     private fun initializePlayer() {
-        simpleExoplayer = ExoPlayerFactory.newSimpleInstance(
+        simpleExoplayer = ExoPlayerFactory.newSimpleInstance(this,
             DefaultRenderersFactory(this),
             DefaultTrackSelector(), DefaultLoadControl()
         );
@@ -114,6 +181,16 @@ class PlayVideoActivity : AppCompatActivity(){
 //        simpleExoplayer.addListener(this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_ID) {
+            ScreenshotManager.INSTANCE.onActivityResult(resultCode, data);
+            Toast.makeText(this,"Done" ,Toast.LENGTH_LONG ).show()
+            ScreenshotManager.INSTANCE.takeScreenshot(this)
+        }
+
+    }
 
     private fun buildMediaSource(uri: Uri): MediaSource {
 //        val mediaSource = buildMediaSource(uri)
@@ -137,7 +214,9 @@ class PlayVideoActivity : AppCompatActivity(){
         val uri = Uri.parse(myvideo)
         val mediaSource = buildMediaSource(uri)
         simpleExoplayer.prepare(mediaSource, true, false)
+//        simpleExoplayer.setV
         simpleExoplayer.setPlayWhenReady(true);
+//        this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 //        simpleExoplayer.seekTo(currentWindow, playbackPosition);
 
 //        myvideo = Uri.parse("https://music.youtube.com/watch?v=BQ0mxQXmLsk&list=RDAMVMVbfpW0pbvaU").toString()
@@ -166,6 +245,15 @@ class PlayVideoActivity : AppCompatActivity(){
 
                 // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
             } else {
+                if(mainli.visibility == View.VISIBLE)
+                {
+                   // imghideshow.rotation = (-90).toFloat();
+                    mainli.visibility =View.GONE
+
+                }else{
+                //    imghideshow.rotation = (90).toFloat();
+                    mainli.visibility =View.VISIBLE
+                }
                 if (StoporNot) {
                   simpleExoplayer.stop()
 //                    finish()
@@ -179,6 +267,7 @@ class PlayVideoActivity : AppCompatActivity(){
     override fun onStop() {
         Log.e("onStop" , "called")
         StoporNot =true;
+
         super.onStop()
     }
 
@@ -190,6 +279,7 @@ class PlayVideoActivity : AppCompatActivity(){
 
     override fun onPostResume() {
         Log.e("Post Resume" , "called")
+
 //        if(mainli.visibility == View.GONE)
 //        {
 //            mainli.visibility = View.VISIBLE
@@ -215,7 +305,7 @@ class PlayVideoActivity : AppCompatActivity(){
             videoPosition = simpleExoplayer.currentPosition
             vidview.useController = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
+                mainli.visibility = View.GONE
                 val params = PictureInPictureParams.Builder()
                 this.enterPictureInPictureMode(params.build())
                 Toast.makeText(this , "you are if ",Toast.LENGTH_LONG).show()

@@ -1,5 +1,6 @@
 package com.ics.likeplayer.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class AllDirectoriesAdapter extends RecyclerView.Adapter<AllDirectoriesAd
                 intent.putExtra("dirpath" , ""+pojoClassArrayList.get(position).getBaseAddress());
                 intent.putExtra("nofsongs" , ""+pojoClassArrayList.get(position).getNo_of_SOngs());
                 v.getContext().startActivity(intent);
+                ((Activity)context).finish();
+                Log.e("aleardy " , "called");
             }
         });
 //        holder.singer_name.setText(pojoClassArrayList.get(position).getSinger_name());
