@@ -50,7 +50,7 @@ public class Mp3OnlyAdapter extends RecyclerView.Adapter<Mp3OnlyAdapter.ViewHold
     @Override
     public void onBindViewHolder(Mp3OnlyAdapter.ViewHolder holder, int position) {
         Log.e("Dire namne is",""+pojoClassArrayList.get(position).getName());
-        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName());
+        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName()+""+pojoClassArrayList.get(position).getNo_of_SOngs());
         holder.Dir_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

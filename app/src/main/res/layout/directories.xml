@@ -11,14 +11,16 @@
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="wrap_content">-->
     <LinearLayout
+
+        android:layout_margin="1dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:background="@color/color_white"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/dircardviewround"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="10dp"
+      >
 
         <LinearLayout
 
@@ -28,26 +30,36 @@
             android:orientation="horizontal"
             >
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="40dp"
+                android:padding="7dp"
                 android:layout_height="40dp"
-                android:src="@drawable/folder"></ImageView>
+                android:src="@drawable/ic_folder_black_24dp"></ImageView>
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:weightSum="1">
             <TextView
+                android:layout_height="match_parent"
                 android:id="@+id/dir_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:text="Download"
                 android:textAllCaps="true"
-                android:textColor="@android:color/holo_orange_light"
-                android:textSize="20dp"
-                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-                android:textStyle="bold"/>
+                android:textColor="#EE000000"
+                android:textSize="13dp"
+                android:textStyle="normal"
 
+               />
+                <ImageView
+                    android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_more_vert_black_24dp">
+
+            </ImageView>
             </LinearLayout>
 
 

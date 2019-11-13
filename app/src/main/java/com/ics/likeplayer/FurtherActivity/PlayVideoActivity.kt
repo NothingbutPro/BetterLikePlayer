@@ -1,17 +1,10 @@
 package com.ics.likeplayer.FurtherActivity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.PictureInPictureParams
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.*
-import android.hardware.display.VirtualDisplay
-import android.media.ImageReader
-import android.media.projection.MediaProjection
-import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,46 +12,60 @@ import android.view.View
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView
 
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.DefaultRenderersFactory
 import com.google.android.exoplayer2.ExoPlayerFactory
 import android.util.Log
-import android.view.TextureView
-import android.view.WindowManager
 import android.widget.*
 import com.google.android.exoplayer2.ui.PlayerView
-import com.ics.likeplayer.MainActivity
 import com.ics.likeplayer.ScreenshotManager
-import com.mindorks.Screenshot
-import kotlinx.android.synthetic.main.activity_play_video.*
-import java.io.File
-import java.io.OutputStream
+import com.google.android.exoplayer2.ui.PlayerControlView
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.google.android.exoplayer2.ui.PlaybackControlView
+import kotlinx.android.synthetic.main.activity_play_video.view.*
 
 
-class PlayVideoActivity : AppCompatActivity()
-{
+class PlayVideoActivity : AppCompatActivity() {
+    companion object {
+        @JvmStatic
+        lateinit var screenshotPermission: Intent
+    }
+
+    //    @JvmStatic lateinit  val screenshotPermission :Intent ;
     private val REQUEST_ID: Int = 1
-    private var videoPosition: Long =0
-    private var closepos: Int =1
-    private var StoporNot: Boolean =false
+    private var videoPosition: Long = 0
+    private var closepos: Int = 1
+    private var StoporNot: Boolean = false
     private lateinit var simpleExoplayer: SimpleExoPlayer
-    private   lateinit  var   hideli: LinearLayout
-    private   lateinit  var   pipmode: LinearLayout
-    private   lateinit  var   mainli: LinearLayout
-    private   lateinit  var   simplelin: LinearLayout
-    private   lateinit  var   imghideshow: ImageView
-    private   lateinit  var   screenshot: ImageView
+    private lateinit var controls: PlaybackControlView
+    private lateinit var hideli: LinearLayout
+    private lateinit var pipmode: LinearLayout
+    private lateinit var mainli: LinearLayout
+    private lateinit var controlli: LinearLayout
+    private lateinit var simplelin: LinearLayout
+    private lateinit var imghideshow: ImageView
+    private lateinit var screenshot: ImageView
     private lateinit var mPictureInPictureParamsBuilder: PictureInPictureParams.Builder
     private var playbackPosition = 0L
     lateinit var vidview: PlayerView
+    //+++++++++++++++++++++++++++++++++++++++All Controls+++++++++++++++++++++++++++++++++++++++++++++++++
+    lateinit var PlaynPauseBTn : ImageButton
+    lateinit var ReverseBtn : ImageButton
+    lateinit var NextBtn : ImageButton
+    lateinit var FastForwardBtn : ImageButton
+    lateinit var BackFastForwardBtn : ImageButton
+    lateinit var RepeatBtn : ImageButton
+    lateinit var VolumeBtn : ImageButton
+    lateinit var MuteBtn : ImageButton
+    //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //    lateinit var controls: PlaybackControlView
     lateinit var myvideo: String
     lateinit var mediacontroller: MediaController
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,26 +73,27 @@ class PlayVideoActivity : AppCompatActivity()
         setContentView(com.ics.likeplayer.R.layout.activity_play_video)
         vidview = findViewById(com.ics.likeplayer.R.id.simpleExoPlayerView)
         screenshot = findViewById(com.ics.likeplayer.R.id.screenshot)
+        controls = findViewById(com.ics.likeplayer.R.id.controls)
+//         controls = findViewById(R.id.controls)
+//        controls.player = this.vidview
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
-        hideli = findViewById(com.ics.likeplayer.R.id.hideli)
-        simplelin = findViewById(com.ics.likeplayer.R.id.simplelin)
         imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow)
         mainli = findViewById(com.ics.likeplayer.R.id.mainli)
-//        mainli.visibility =View.GONE
-        initializePlayer()
-        simplelin.setOnClickListener {
-//            Toast.makeText(this ,"Sorry not Allowed" , Toast.LENGTH_LONG).show()
-        }
+//        PauseBTn = findViewById(R.id.exo_play);
+        InitializePlayer()
+        InitializePlayerCOntrols()
         screenshot.setOnClickListener {
             takeScreenshot(vidview);
         }
+
         pipmode.setOnClickListener {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+            ) {
 //                mainli.visibility =View.GONE
                 enterPIPMode()
             } else {
-            Toast.makeText(this ,"Sorry not Allowed" , Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Sorry not Allowed", Toast.LENGTH_LONG).show()
                 enterPIPMode()
 //                if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //                        !Settings.canDrawOverlays(this)
@@ -100,16 +108,13 @@ class PlayVideoActivity : AppCompatActivity()
             }
         }
         imghideshow.setOnClickListener {
-            if(hideli.visibility == View.VISIBLE)
-            {
+            if (hideli.visibility == View.VISIBLE) {
                 imghideshow.rotation = (-90).toFloat();
-                hideli.visibility =View.GONE
+                hideli.visibility = View.GONE
 
-            }
-            else
-            {
+            } else {
                 imghideshow.rotation = (90).toFloat();
-                hideli.visibility =View.VISIBLE
+                hideli.visibility = View.VISIBLE
             }
         }
 //        supportActionBar?.hide()
@@ -128,6 +133,17 @@ class PlayVideoActivity : AppCompatActivity()
 //        vidview.requestFocus();
 //        vidview.start()
 
+    }
+
+    private fun InitializePlayerCOntrols() {
+        PlaynPauseBTn = findViewById(R.id.exo_play);
+        ReverseBtn = findViewById(R.id.exo_prev);
+        NextBtn = findViewById(R.id.exo_next);
+        FastForwardBtn = findViewById(R.id.exo_ffwd);
+        RepeatBtn = findViewById(R.id.exo_repeat_toggle);
+//        VolumeBtn = findViewById(R.id.exo_);
+        BackFastForwardBtn = findViewById(R.id.exo_rew);
+//        MuteBtn = findViewById(R.id.exo_);
     }
 
     @SuppressLint("NewApi")
@@ -168,8 +184,9 @@ class PlayVideoActivity : AppCompatActivity()
 
     }
 
-    private fun initializePlayer() {
-        simpleExoplayer = ExoPlayerFactory.newSimpleInstance(this,
+    private fun InitializePlayer() {
+        simpleExoplayer = ExoPlayerFactory.newSimpleInstance(
+            this,
             DefaultRenderersFactory(this),
             DefaultTrackSelector(), DefaultLoadControl()
         );
@@ -185,9 +202,25 @@ class PlayVideoActivity : AppCompatActivity()
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_ID) {
-            ScreenshotManager.INSTANCE.onActivityResult(resultCode, data);
-            Toast.makeText(this,"Done" ,Toast.LENGTH_LONG ).show()
-            ScreenshotManager.INSTANCE.takeScreenshot(this)
+//            ScreenshotManager.INSTANCE.onActivityResult(resultCode, data);
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
+            ScreenshotManager.INSTANCE.takeScreenshot(this, data)
+//            mainli.visibility =View.VISIBLE
+//            controlli.visibility =View.VISIBLE
+//
+//            vidview.player = simpleExoplayer
+//
+//            vidview.showController()
+//            vidview.showContextMenu()
+            // prepareExoplayer()
+
+
+//            if(!vidview.isControllerVisible)
+//            {
+//                vidview.controllerAutoShow =true
+//            }
+//            initializePlayer()
+
         }
 
     }
@@ -216,6 +249,8 @@ class PlayVideoActivity : AppCompatActivity()
         simpleExoplayer.prepare(mediaSource, true, false)
 //        simpleExoplayer.setV
         simpleExoplayer.setPlayWhenReady(true);
+        controls.player = simpleExoplayer
+
 //        this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 //        simpleExoplayer.seekTo(currentWindow, playbackPosition);
 
@@ -223,9 +258,10 @@ class PlayVideoActivity : AppCompatActivity()
 //        val uri = Uri.parse(myvideo)
 //        val mediaSource = buildMediaSource(uri)
         simpleExoplayer.prepare(mediaSource)
+        vidview.controllerShowTimeoutMs = 0
     }
 
-    override fun onBackPressed(){
+    override fun onBackPressed() {
 //        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 //            && packageManager
 //                .hasSystemFeature(
@@ -233,52 +269,54 @@ class PlayVideoActivity : AppCompatActivity()
 //
 //            enterPIPMode()
 //        } else {
-            simpleExoplayer.stop()
-            super.onBackPressed()
+        simpleExoplayer.stop()
+        super.onBackPressed()
 //        }
     }
-        //FOr PIPs
-        override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean,
-                                                   newConfig: Configuration) {
-            if (isInPictureInPictureMode) {
-                Toast.makeText(this , "You done it well",Toast.LENGTH_LONG).show()
 
-                // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
+    //FOr PIPs
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration
+    ) {
+        if (isInPictureInPictureMode) {
+            Toast.makeText(this, "You done it well", Toast.LENGTH_LONG).show()
+
+            // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
+        } else {
+            if (mainli.visibility == View.VISIBLE) {
+                // imghideshow.rotation = (-90).toFloat();
+                mainli.visibility = View.GONE
+
             } else {
-                if(mainli.visibility == View.VISIBLE)
-                {
-                   // imghideshow.rotation = (-90).toFloat();
-                    mainli.visibility =View.GONE
-
-                }else{
                 //    imghideshow.rotation = (90).toFloat();
-                    mainli.visibility =View.VISIBLE
-                }
-                if (StoporNot) {
-                  simpleExoplayer.stop()
+                mainli.visibility = View.VISIBLE
+            }
+            if (StoporNot) {
+                simpleExoplayer.stop()
 //                    finish()
-                }
+            }
 //                simpleExoplayer.stop()
 //                finish()
-                // Restore the full-screen UI.
-            }
+            // Restore the full-screen UI.
         }
+    }
 
     override fun onStop() {
-        Log.e("onStop" , "called")
-        StoporNot =true;
+        Log.e("onStop", "called")
+        StoporNot = true;
 
         super.onStop()
     }
 
     override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
-        Log.e("Resume" , "called")
+        Log.e("Resume", "called")
 
         super.onTopResumedActivityChanged(isTopResumedActivity)
     }
 
     override fun onPostResume() {
-        Log.e("Post Resume" , "called")
+        Log.e("Post Resume", "called")
 
 //        if(mainli.visibility == View.GONE)
 //        {
@@ -292,7 +330,7 @@ class PlayVideoActivity : AppCompatActivity()
     //
     //Called when the user touches the Home or Recents button to leave the app.
     override fun onUserLeaveHint() {
-        Toast.makeText(this , "you are in onUserLeaveHint ",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "you are in onUserLeaveHint ", Toast.LENGTH_LONG).show()
         super.onUserLeaveHint()
         enterPIPMode()
     }
@@ -301,14 +339,15 @@ class PlayVideoActivity : AppCompatActivity()
     @Suppress("DEPRECATION")
     fun enterPIPMode() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-            && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
+            && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+        ) {
             videoPosition = simpleExoplayer.currentPosition
             vidview.useController = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 mainli.visibility = View.GONE
                 val params = PictureInPictureParams.Builder()
                 this.enterPictureInPictureMode(params.build())
-                Toast.makeText(this , "you are if ",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "you are if ", Toast.LENGTH_LONG).show()
 //                if(mainli.visibility == View.GONE)
 //                {
 //                    mainli.visibility = View.VISIBLE
@@ -316,7 +355,7 @@ class PlayVideoActivity : AppCompatActivity()
 //                    mainli.visibility = View.GONE
 //                }
             } else {
-                Toast.makeText(this , "you are in else ",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "you are in else ", Toast.LENGTH_LONG).show()
                 this.enterPictureInPictureMode()
             }
         }

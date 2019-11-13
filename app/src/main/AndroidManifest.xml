@@ -30,14 +30,18 @@
 
 
         </activity>
-        <activity android:name=".FurtherActivity.AllVideoActivity"
+        <activity
+            android:name=".FurtherActivity.AllVideoActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".FurtherActivity.AllMp3Activities"
+        <activity
+            android:name=".FurtherActivity.AllMp3Activities"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            ></activity>
         <activity
             android:name=".Basic.SplashAct"
             android:label="@string/app_name">

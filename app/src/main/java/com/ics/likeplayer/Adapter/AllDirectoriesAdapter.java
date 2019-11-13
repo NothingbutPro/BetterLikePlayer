@@ -37,7 +37,9 @@ public class AllDirectoriesAdapter extends RecyclerView.Adapter<AllDirectoriesAd
     @Override
     public void onBindViewHolder(AllDirectoriesAdapter.ViewHolder holder, int position) {
         Log.e("Dire namne is",""+pojoClassArrayList.get(position).getName());
-        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName());
+//        pojoClassArrayList.set(position , )
+//        DirectoriesList.set
+        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName() +" "+ pojoClassArrayList.get(position).getNo_of_SOngs());
         holder.Dir_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

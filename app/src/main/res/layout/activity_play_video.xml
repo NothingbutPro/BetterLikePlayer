@@ -31,17 +31,26 @@
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/simpleExoPlayerView"
             android:layout_width="match_parent"
+            app:use_controller="false"
             app:auto_show="true"
-            app:controller_layout_id="@layout/likepalyercontrols"
             app:player_layout_id="@layout/customexoplayerview"
-            app:repeat_toggle_modes="none"
             android:layout_height="match_parent"
             app:surface_type="texture_view"
-            app:use_controller="true"
             app:resize_mode="fixed_width"
             tools:layout_editor_absoluteX="45dp"
             tools:layout_editor_absoluteY="178dp" />
 
+    <com.google.android.exoplayer2.ui.PlaybackControlView
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simpleExoPlayerView"
+        android:background="@color/colorPrimary"
+        android:foregroundGravity="bottom"
+        app:controller_layout_id="@layout/likepalyercontrols"
+        app:layout_constraintBottom_toBottomOf="@+id/simpleExoPlayerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:show_timeout="0" />
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"

@@ -1,7 +1,6 @@
 package com.ics.likeplayer;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,10 +17,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
+
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -48,7 +53,8 @@ public class ScreenshotManager {
     }
 
     @UiThread
-    public boolean takeScreenshot(@NonNull Context context) {
+    public boolean takeScreenshot( Context context, Intent data) {
+        mIntent =data;
         if (mIntent == null)
             return false;
         final MediaProjectionManager mediaProjectionManager = (MediaProjectionManager) context.getSystemService(Context.MEDIA_PROJECTION_SERVICE);
@@ -72,14 +78,14 @@ public class ScreenshotManager {
             @Override
             public void onImageAvailable(final ImageReader reader) {
                 Log.d("AppLog", "onImageAvailable");
-                mediaProjection.stop();
+
                 new AsyncTask<Void, Void, Bitmap>() {
                     @Override
                     protected Bitmap doInBackground(final Void... params) {
                         Image image = null;
                         Bitmap bitmap = null;
                         try {
-                            image = reader.acquireNextImage();
+                            image = reader.acquireLatestImage();
                             if (image != null) {
                                 Image.Plane[] planes = image.getPlanes();
                                 ByteBuffer buffer = planes[0].getBuffer();
@@ -101,6 +107,8 @@ public class ScreenshotManager {
                                     bitmap.recycle();
                                 }
                                 MediaStore.Images.Media.insertImage(context.getContentResolver(), croppedBitmap, "Screen", "screen");
+                                mediaProjection.stop();
+//                                mediaProjection.
                                 return bitmap;
                             }
                         } catch (Exception e) {
@@ -130,6 +138,14 @@ public class ScreenshotManager {
                     virtualDisplay.release();
                 imageReader.setOnImageAvailableListener(null, null);
                 mediaProjection.unregisterCallback(this);
+//                LinearLayout mainli = ((Activity) context).findViewById(R.id.mainli);
+//                LinearLayout controlli = ((Activity) context).findViewById(R.id.controlli);
+//                PlayerView simpleExoPlayerView = ((Activity) context).findViewById(R.id.simpleExoPlayerView);
+//                simpleExoPlayerView.showController();
+//                controlli.setVisibility(View.VISIBLE);
+//                mainli.setVisibility(View.VISIBLE);
+                Log.e("unregis" , "thjis media call back");
+
             }
         }, null);
         return true;

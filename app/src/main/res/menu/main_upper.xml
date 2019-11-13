@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/videor"
+        android:icon="@drawable/iconssearch30"
         android:title="Video" />
 
     <item
         android:id="@+id/navigat_song"
-        android:icon="@drawable/musicalnote"
+        android:icon="@drawable/lockicons8folder32"
         android:title="Music" />
 
     <item
         android:id="@+id/navigation_palylist"
-        android:icon="@drawable/playlist"
+        android:icon="@drawable/iconssearch30"
         android:title="Playlists" />
 
-    <item
-        android:visible="false"
-        android:id="@+id/navigation_genere"
-        android:icon="@drawable/genere"
-        android:title="Playlists" />
+
 
 </menu>
