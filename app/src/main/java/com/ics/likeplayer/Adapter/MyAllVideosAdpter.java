@@ -77,6 +77,7 @@ public class MyAllVideosAdpter extends RecyclerView.Adapter<MyAllVideosAdpter.Vi
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext() , PlayVideoActivity.class);
                 intent.putExtra("vidurl" , ""+pojoClassArrayList.get(position).getPath());
+                intent.putExtra("slevidname" , ""+pojoClassArrayList.get(position).getName());
                 v.getContext().startActivity(intent);
             }
         });

@@ -31,7 +31,7 @@
             >
             <ImageView
                 android:layout_width="40dp"
-                android:padding="7dp"
+                android:padding="9dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_folder_black_24dp"></ImageView>
             <LinearLayout
@@ -41,6 +41,7 @@
                 android:padding="5dp"
                 android:weightSum="1">
             <TextView
+
                 android:layout_height="match_parent"
                 android:id="@+id/dir_name"
                 android:layout_width="match_parent"
@@ -48,7 +49,7 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:text="Download"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="#EE000000"
                 android:textSize="13dp"
                 android:textStyle="normal"

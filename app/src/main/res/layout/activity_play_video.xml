@@ -28,7 +28,10 @@
 <!--        android:orientation="vertical"-->
 <!--        >-->
 
+
         <com.google.android.exoplayer2.ui.PlayerView
+
+            app:layout_constraintTop_toBottomOf="@+id/tootwa"
             android:id="@+id/simpleExoPlayerView"
             android:layout_width="match_parent"
             app:use_controller="false"
@@ -45,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/simpleExoPlayerView"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/transparent"
         android:foregroundGravity="bottom"
         app:controller_layout_id="@layout/likepalyercontrols"
         app:layout_constraintBottom_toBottomOf="@+id/simpleExoPlayerView"
@@ -64,129 +67,230 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/tootwa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/mainli"
+        <androidx.appcompat.widget.Toolbar
+
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_black"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/rotate"
+                android:id="@+id/backbtns"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/backtothevack"
+                android:padding="10dp"
+                />
+            <!--            <ImageView-->
+            <!--                -->
+            <!--                android:layout_width="17dp"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:background="@drawable/iconssearch30">-->
+
+            <!--            </ImageView>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/slevidname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:text="Video"
+                    android:textColor="@color/color_white"
+                    android:textSize="20dp">
+
+                </TextView>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.60"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:weightSum="3">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingRight="20dp"
+                            android:visibility="gone">
+                            <ImageView
+
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@drawable/iconssearch30">
+
+                            </ImageView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingRight="20dp">
+                            <ImageView
+
+
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@drawable/lockicons8folder32">
+
+                            </ImageView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@drawable/moremenu">
+
+                            </ImageView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/mainli"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tootwa">
+
+        <ImageView
+            android:id="@+id/rotate"
+            android:layout_width="@dimen/size_thirty_five"
+            android:layout_height="@dimen/size_thirty_five"
+            android:layout_margin="5dp"
+
+            android:background="@drawable/drawable_rounded_transparent"
+            android:padding="@dimen/size_ten"
+            android:src="@drawable/drawable_volume_selector"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/mute"
+            android:layout_width="@dimen/size_thirty_five"
+            android:layout_height="@dimen/size_thirty_five"
+            android:layout_margin="4dp"
+            android:background="@drawable/drawable_rounded_transparent"
+            android:padding="@dimen/size_ten"
+            android:src="@drawable/soundmute"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/hideli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/screenshot"
                 android:layout_width="@dimen/size_thirty_five"
                 android:layout_height="@dimen/size_thirty_five"
                 android:layout_margin="5dp"
 
                 android:background="@drawable/drawable_rounded_transparent"
                 android:padding="@dimen/size_ten"
-                android:src="@drawable/drawable_volume_selector"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/mute"
-                android:layout_width="@dimen/size_thirty_five"
-                android:layout_height="@dimen/size_thirty_five"
-                android:layout_margin="4dp"
-                android:background="@drawable/drawable_rounded_transparent"
-                android:padding="@dimen/size_ten"
-                android:src="@drawable/soundmute"
+                android:src="@drawable/screenshot"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/hideli"
+                android:id="@+id/pipmode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               >
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/screenshot"
+
                     android:layout_width="@dimen/size_thirty_five"
                     android:layout_height="@dimen/size_thirty_five"
                     android:layout_margin="5dp"
-
                     android:background="@drawable/drawable_rounded_transparent"
                     android:padding="@dimen/size_ten"
-                    android:src="@drawable/screenshot"
+                    android:src="@drawable/gopipvec"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:id="@+id/pipmode"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="Go PIP "
+                    android:textAlignment="center"
+                    android:textColor="#000">
 
-                    <ImageView
+                </TextView>
 
-                        android:layout_width="@dimen/size_thirty_five"
-                        android:layout_height="@dimen/size_thirty_five"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/drawable_rounded_transparent"
-                        android:padding="@dimen/size_ten"
-                        android:src="@drawable/gopipvec"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="Go PIP "
-                        android:textColor="#000">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-
-                        android:layout_width="@dimen/size_thirty_five"
-                        android:layout_height="@dimen/size_thirty_five"
-                        android:layout_margin="5dp"
-
-                        android:background="@drawable/drawable_rounded_transparent"
-                        android:padding="@dimen/size_ten"
-                        android:src="@drawable/drawable_volume_selector"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageViewVolume"
+
                     android:layout_width="@dimen/size_thirty_five"
                     android:layout_height="@dimen/size_thirty_five"
                     android:layout_margin="5dp"
+
                     android:background="@drawable/drawable_rounded_transparent"
                     android:padding="@dimen/size_ten"
                     android:src="@drawable/drawable_volume_selector"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imghideshow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:id="@+id/imageViewVolume"
+                android:layout_width="@dimen/size_thirty_five"
+                android:layout_height="@dimen/size_thirty_five"
                 android:layout_margin="5dp"
-                android:padding="@dimen/size_ten"
                 android:background="@drawable/drawable_rounded_transparent"
-                android:src="@drawable/hideshow"
-                android:rotation="90"
+                android:padding="@dimen/size_ten"
+                android:src="@drawable/drawable_volume_selector"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imghideshow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/drawable_rounded_transparent"
+            android:padding="@dimen/size_ten"
+            android:rotation="90"
+            android:src="@drawable/hideshow"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
 
 

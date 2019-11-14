@@ -40,7 +40,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             ></activity>
         <activity
             android:name=".Basic.SplashAct"

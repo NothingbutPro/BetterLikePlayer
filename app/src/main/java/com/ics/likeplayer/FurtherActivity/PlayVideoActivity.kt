@@ -52,6 +52,7 @@ class PlayVideoActivity : AppCompatActivity() {
     private lateinit var simplelin: LinearLayout
     private lateinit var imghideshow: ImageView
     private lateinit var screenshot: ImageView
+    private lateinit var slevidname: TextView
     private lateinit var mPictureInPictureParamsBuilder: PictureInPictureParams.Builder
     private var playbackPosition = 0L
     lateinit var vidview: PlayerView
@@ -74,6 +75,7 @@ class PlayVideoActivity : AppCompatActivity() {
         vidview = findViewById(com.ics.likeplayer.R.id.simpleExoPlayerView)
         screenshot = findViewById(com.ics.likeplayer.R.id.screenshot)
         controls = findViewById(com.ics.likeplayer.R.id.controls)
+        slevidname = findViewById(com.ics.likeplayer.R.id.slevidname)
 //         controls = findViewById(R.id.controls)
 //        controls.player = this.vidview
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
@@ -85,6 +87,7 @@ class PlayVideoActivity : AppCompatActivity() {
         screenshot.setOnClickListener {
             takeScreenshot(vidview);
         }
+        slevidname.setText(intent.getStringExtra("slevidname").toString())
 
         pipmode.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N

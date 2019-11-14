@@ -45,6 +45,7 @@ public class AllDirectoriesAdapter extends RecyclerView.Adapter<AllDirectoriesAd
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext() , AllVideoActivity.class);
                 intent.putExtra("dirpath" , ""+pojoClassArrayList.get(position).getBaseAddress());
+                intent.putExtra("sectionvid" , ""+pojoClassArrayList.get(position).getName());
                 intent.putExtra("nofsongs" , ""+pojoClassArrayList.get(position).getNo_of_SOngs());
                 v.getContext().startActivity(intent);
                 ((Activity)context).finish();

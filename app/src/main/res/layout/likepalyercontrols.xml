@@ -76,7 +76,9 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -114,176 +116,275 @@
             android:textStyle="bold"/>
 
     </LinearLayout>
+
     <LinearLayout
+
+        android:layout_height="55dp"
+        android:background="@color/color_black"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:weightSum="5">
 
-        <ImageView
-            android:id="@+id/exo_prev"
-            android:layout_width="@dimen/size_thirty_five"
-            android:layout_height="@dimen/size_thirty_five"
-            android:layout_margin="5dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/drawable_rounded_transparent"
-            android:padding="10dp"
-            android:rotation="180"
-            android:src="@drawable/notloop_3213444"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
 
-        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"></TextView>
-<!--        <ImageView-->
-<!--            android:id="@id/exo_prev"-->
-<!--            style="@style/ExoMediaButton.Previous"/>-->
-     <LinearLayout
-         android:id="@+id/exo_rew"
-         android:layout_width="56dp"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal">
-        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        <ImageView
+            android:id="@+id/lockscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:src="@drawable/ic_lock_black_24dp">
 
+        </ImageView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+        <ImageView
+            android:id="@+id/prev_thedamn"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_skip_previous_black_24dp">
+
+        </ImageView>
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="1">
+        <ImageView
+            android:id="@+id/play_damn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:src="@drawable/ic_play_circle_outline_black_24dp">
+
+        </ImageView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1">
+        <ImageView
+            android:id="@+id/nextthedamn"
+            android:layout_height="match_parent"
+            android:rotation="180"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_skip_previous_black_24dp">
+
+        </ImageView>
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        <ImageView
+            android:id="@+id/fullthedamn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/xyz"
-                android:layout_width="@dimen/size_thirty_five"
-                android:layout_height="@dimen/size_thirty_five"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/drawable_rounded_transparent"
-                android:padding="@dimen/size_ten"
-                android:rotation="180"
-                android:src="@drawable/play_3213446"
-                />
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:src="@drawable/ic_fullscreen_black_24dp">
 
-            <ImageView
+        </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="horizontal">-->
 
-                android:id="@+id/profile_image2"
-                android:layout_width="@dimen/size_thirty_five"
-                android:layout_height="@dimen/size_thirty_five"
-                android:layout_alignRight="@+id/xyz"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/drawable_rounded_transparent"
-                android:padding="@dimen/size_ten"
-                android:rotation="180"
-                android:src="@drawable/play_3213446"
-                />
-        </RelativeLayout>
-     </LinearLayout>
-<!--        <LinearLayout-->
-<!--            -->
-<!--            android:id="@+id/exo_rew"-->
+<!--        <ImageView-->
+<!--            android:id="@+id/exo_prev"-->
+<!--            android:layout_width="@dimen/size_thirty_five"-->
+<!--            android:layout_height="@dimen/size_thirty_five"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:layout_marginRight="10dp"-->
 <!--            android:background="@drawable/drawable_rounded_transparent"-->
+<!--            android:padding="10dp"-->
+<!--            android:rotation="180"-->
+<!--            android:src="@drawable/notloop_3213444"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-<!--            <TextView-->
-<!--                android:drawableLeft="@drawable/play_3213446"-->
-<!--                android:layout_width="@dimen/size_thirty_five"-->
-<!--                android:layout_height="@dimen/size_thirty_five"></TextView>-->
+<!--            android:layout_marginRight="10dp"></TextView>-->
 <!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@id/exo_prev"&ndash;&gt;-->
+<!--&lt;!&ndash;            style="@style/ExoMediaButton.Previous"/>&ndash;&gt;-->
+<!--     <LinearLayout-->
+<!--         android:visibility="gone"-->
+<!--         android:id="@+id/exo_rew"-->
+<!--         android:layout_width="56dp"-->
+<!--         android:layout_height="wrap_content"-->
+<!--         android:orientation="horizontal">-->
+<!--        <RelativeLayout-->
+
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/xyz"-->
+<!--                android:layout_width="@dimen/size_thirty_five"-->
+<!--                android:layout_height="@dimen/size_thirty_five"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:background="@drawable/drawable_rounded_transparent"-->
+<!--                android:padding="@dimen/size_ten"-->
+<!--                android:rotation="180"-->
+<!--                android:src="@drawable/play_3213446"-->
+<!--                />-->
+
+<!--            <ImageView-->
+
+<!--                android:id="@+id/profile_image2"-->
+<!--                android:layout_width="@dimen/size_thirty_five"-->
+<!--                android:layout_height="@dimen/size_thirty_five"-->
+<!--                android:layout_alignRight="@+id/xyz"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="0dp"-->
+<!--                android:background="@drawable/drawable_rounded_transparent"-->
+<!--                android:padding="@dimen/size_ten"-->
+<!--                android:rotation="180"-->
+<!--                android:src="@drawable/play_3213446"-->
+<!--                />-->
+<!--        </RelativeLayout>-->
+<!--     </LinearLayout>-->
+<!--&lt;!&ndash;        <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;            &ndash;&gt;-->
 <!--&lt;!&ndash;            android:id="@+id/exo_rew"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="w"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="@dimen/size_thirty_five"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_margin="5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:rotation="180"&ndash;&gt;-->
 <!--&lt;!&ndash;            android:background="@drawable/drawable_rounded_transparent"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:padding="@dimen/size_ten"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:src="@drawable/play_3213446"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintLeft_toLeftOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />  &ndash;&gt;-->
-<!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/exo_rew"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="@dimen/size_thirty_five"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="@dimen/size_thirty_five"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_margin="5dp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:rotation="180"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:background="@drawable/drawable_rounded_transparent"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:padding="@dimen/size_ten"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:src="@drawable/play_3213446"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintLeft_toLeftOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:orientation="horizontal">&ndash;&gt;-->
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:drawableLeft="@drawable/play_3213446"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="@dimen/size_thirty_five"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="@dimen/size_thirty_five"></TextView>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <ImageView&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:id="@+id/exo_rew"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:layout_width="w"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:layout_height="@dimen/size_thirty_five"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:layout_margin="5dp"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:rotation="180"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:background="@drawable/drawable_rounded_transparent"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:padding="@dimen/size_ten"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:src="@drawable/play_3213446"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            app:layout_constraintLeft_toLeftOf="parent"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <ImageView&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:id="@+id/exo_rew"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:layout_width="@dimen/size_thirty_five"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:layout_height="@dimen/size_thirty_five"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:layout_margin="5dp"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:rotation="180"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:background="@drawable/drawable_rounded_transparent"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:padding="@dimen/size_ten"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            android:src="@drawable/play_3213446"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            app:layout_constraintLeft_toLeftOf="parent"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        </LinearLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;        <ImageButton android:id="@id/exo_rew"&ndash;&gt;-->
+<!--&lt;!&ndash;            style="@style/ExoMediaButton.Rewind"/>&ndash;&gt;-->
+<!--        <ImageButton-->
+<!--            android:id="@id/exo_shuffle"-->
+<!--            style="@style/ExoMediaButton.VR"-->
+<!--            android:visibility="gone"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="10dp"></TextView>-->
+
+<!--        <ImageView-->
+<!--          android:background="@drawable/platbttny"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            -->
+<!--        </ImageView>-->
+<!--        -->
+<!--&lt;!&ndash;        <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;            android:src="@drawable/platbttny"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@id/exo_play"&ndash;&gt;-->
+<!--&lt;!&ndash;            style="@style/ExoMediaButton.Play"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <ImageButton&ndash;&gt;-->
+<!--&lt;!&ndash;            &ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@id/exo_play"&ndash;&gt;-->
+<!--&lt;!&ndash;            style="@style/ExoMediaButton.Play"/>&ndash;&gt;-->
+
+<!--        <ImageButton-->
+<!--            android:id="@id/exo_pause"-->
+<!--            style="@style/ExoMediaButton.Pause"-->
+<!--            android:visibility="gone"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="10dp"></TextView>-->
+<!--        <LinearLayout-->
+<!--            android:visibility="gone"-->
+<!--            android:id="@+id/exo_ffwd"-->
+<!--            android:layout_width="56dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+<!--            <RelativeLayout-->
+
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
+<!--                <ImageView-->
+
+<!--                    android:layout_width="@dimen/size_thirty_five"-->
+<!--                    android:layout_height="@dimen/size_thirty_five"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:background="@drawable/drawable_rounded_transparent"-->
+<!--                    android:padding="@dimen/size_ten"-->
+<!--                    android:rotation="0"-->
+<!--                    android:src="@drawable/play_3213446"-->
+<!--                    />-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/size_thirty_five"-->
+<!--                    android:layout_height="@dimen/size_thirty_five"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_marginRight="0dp"-->
+<!--                    android:background="@drawable/drawable_rounded_transparent"-->
+<!--                    android:padding="@dimen/size_ten"-->
+<!--                    android:rotation="0"-->
+<!--                    android:src="@drawable/play_3213446"-->
+<!--                    />-->
+<!--            </RelativeLayout>-->
 <!--        </LinearLayout>-->
-<!--        <ImageButton android:id="@id/exo_rew"-->
-<!--            style="@style/ExoMediaButton.Rewind"/>-->
-        <ImageButton
-            android:id="@id/exo_shuffle"
-            style="@style/ExoMediaButton.VR"
-            android:visibility="gone"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"></TextView>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="10dp"></TextView>-->
+<!--        <ImageView-->
+<!--            android:id="@+id/exo_next"-->
+<!--            android:layout_width="@dimen/size_thirty_five"-->
+<!--            android:layout_height="@dimen/size_thirty_five"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:background="@drawable/drawable_rounded_transparent"-->
+<!--            android:padding="10dp"-->
+<!--            android:rotation="0"-->
+<!--            android:src="@drawable/notloop_3213444"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-        <ImageButton
-
-            android:id="@id/exo_play"
-            style="@style/ExoMediaButton.Play"/>
-
-        <ImageButton
-            android:id="@id/exo_pause"
-            style="@style/ExoMediaButton.Pause"
-            android:visibility="gone"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"></TextView>
-        <LinearLayout
-            android:id="@+id/exo_ffwd"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-
-                    android:layout_width="@dimen/size_thirty_five"
-                    android:layout_height="@dimen/size_thirty_five"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:background="@drawable/drawable_rounded_transparent"
-                    android:padding="@dimen/size_ten"
-                    android:rotation="0"
-                    android:src="@drawable/play_3213446"
-                    />
-
-                <ImageView
-                    android:layout_width="@dimen/size_thirty_five"
-                    android:layout_height="@dimen/size_thirty_five"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="0dp"
-                    android:background="@drawable/drawable_rounded_transparent"
-                    android:padding="@dimen/size_ten"
-                    android:rotation="0"
-                    android:src="@drawable/play_3213446"
-                    />
-            </RelativeLayout>
-        </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"></TextView>
-        <ImageView
-            android:id="@+id/exo_next"
-            android:layout_width="@dimen/size_thirty_five"
-            android:layout_height="@dimen/size_thirty_five"
-            android:layout_margin="5dp"
-            android:background="@drawable/drawable_rounded_transparent"
-            android:padding="10dp"
-            android:rotation="0"
-            android:src="@drawable/notloop_3213444"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
 

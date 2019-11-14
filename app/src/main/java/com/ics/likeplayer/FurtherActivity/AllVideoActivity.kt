@@ -5,6 +5,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -24,6 +26,8 @@ class AllVideoActivity : AppCompatActivity() {
     private var myAllVideosAdpter: MyAllVideosAdpter? =null
     lateinit var RootDirname :String
      lateinit var allvideorec : RecyclerView
+     lateinit var sectionvid : TextView
+     lateinit var backbtns : ImageView
 //     lateinit var File : File
     var AllVideosList : ArrayList<AllVideos> = ArrayList()
 //    private var MyAllVideosAdpter: myAllVideosAdpter = null
@@ -34,7 +38,13 @@ class AllVideoActivity : AppCompatActivity() {
         Log.e("Created" , "AllVideoActivity.")
         setContentView(R.layout.activity_all_video)
         allvideorec = findViewById(R.id.allvideorec);
+        sectionvid = findViewById(R.id.sectionvid);
+        backbtns = findViewById(R.id.backbtns);
         RootDirname = intent.getStringExtra("dirpath")
+        sectionvid.setText(intent.getStringExtra("sectionvid"))
+        backbtns.setOnClickListener {
+            onBackPressed()
+        }
         if(!RootDirname.isBlank() || !RootDirname.isEmpty())
         {
             Toast.makeText(this , "Directory Name"+RootDirname,Toast.LENGTH_LONG).show()

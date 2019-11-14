@@ -29,18 +29,23 @@
                 android:layout_marginTop="4dp"
 
                 android:src="@drawable/videor"/>
-
-                <TextView
-                    android:id="@+id/time"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignRight="@id/vidthm"
                     android:layout_alignBottom="@id/vidthm"
+                    android:background="@android:color/black">
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:layout_weight="9"
                     android:text="2:22"
-                    android:textColor="@android:color/holo_red_dark"
+                    android:textColor="@android:color/white"
                     android:textSize="12.5dp"
                     android:textStyle="bold"/>
+                </LinearLayout>
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +60,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="Clean Bendit"
-                android:textColor="@android:color/holo_blue_light"
+                android:textColor="@android:color/black"
                 android:textSize="13dp">
 
             </TextView>
@@ -66,8 +71,7 @@
                 android:layout_width="65dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:rotation="90"
-               android:src="@drawable/more111"
+               android:src="@drawable/ic_more_vert_black_24dp"
                 android:text="Clean Bendit"
                 android:textColor="@android:color/holo_blue_light"
               />
@@ -80,11 +84,11 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/cardview_dark_background"/>
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@color/cardview_dark_background"/>-->
 
 
 </LinearLayout>
