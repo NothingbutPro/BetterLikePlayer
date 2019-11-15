@@ -8,7 +8,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -28,11 +28,16 @@ import com.google.android.exoplayer2.ui.PlayerControlView
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.View
+import com.google.android.exoplayer2.source.TrackGroupArray
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlaybackControlView
-import kotlinx.android.synthetic.main.activity_play_video.view.*
+import kotlinx.android.synthetic.main.activity_play_video.*
 
 
-class PlayVideoActivity : AppCompatActivity() {
+class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
+
+
     companion object {
         @JvmStatic
         lateinit var screenshotPermission: Intent
@@ -57,14 +62,14 @@ class PlayVideoActivity : AppCompatActivity() {
     private var playbackPosition = 0L
     lateinit var vidview: PlayerView
     //+++++++++++++++++++++++++++++++++++++++All Controls+++++++++++++++++++++++++++++++++++++++++++++++++
-    lateinit var PlaynPauseBTn : ImageButton
-    lateinit var ReverseBtn : ImageButton
-    lateinit var NextBtn : ImageButton
-    lateinit var FastForwardBtn : ImageButton
-    lateinit var BackFastForwardBtn : ImageButton
-    lateinit var RepeatBtn : ImageButton
-    lateinit var VolumeBtn : ImageButton
-    lateinit var MuteBtn : ImageButton
+    lateinit var PlaynPauseBTn : ImageView
+    lateinit var ReverseBtn : ImageView
+    lateinit var NextBtn : ImageView
+    lateinit var FastForwardBtn : ImageView
+    lateinit var BackFastForwardBtn : ImageView
+    lateinit var RepeatBtn : ImageView
+    lateinit var VolumeBtn : ImageView
+    lateinit var MuteBtn : ImageView
     //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //    lateinit var controls: PlaybackControlView
     lateinit var myvideo: String
@@ -81,6 +86,7 @@ class PlayVideoActivity : AppCompatActivity() {
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
         imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow)
         mainli = findViewById(com.ics.likeplayer.R.id.mainli)
+
 //        PauseBTn = findViewById(R.id.exo_play);
         InitializePlayer()
         InitializePlayerCOntrols()
@@ -88,6 +94,17 @@ class PlayVideoActivity : AppCompatActivity() {
             takeScreenshot(vidview);
         }
         slevidname.setText(intent.getStringExtra("slevidname").toString())
+        PlaynPauseBTn.setOnClickListener {
+            if(simpleExoplayer.isPlaying)
+            {
+//                simpleExoplayer.pa
+                simpleExoplayer.setPlayWhenReady(false);
+                simpleExoplayer.getPlaybackState();
+            }else{
+                simpleExoplayer.setPlayWhenReady(true);
+                simpleExoplayer.getPlaybackState();
+            }
+        }
 
         pipmode.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
@@ -139,7 +156,8 @@ class PlayVideoActivity : AppCompatActivity() {
     }
 
     private fun InitializePlayerCOntrols() {
-        PlaynPauseBTn = findViewById(R.id.exo_play);
+//        PlaynPauseBTn = findViewById(R.id.);
+        PlaynPauseBTn = findViewById(com.ics.likeplayer.R.id.playnpause)
         ReverseBtn = findViewById(R.id.exo_prev);
         NextBtn = findViewById(R.id.exo_next);
         FastForwardBtn = findViewById(R.id.exo_ffwd);
@@ -262,6 +280,40 @@ class PlayVideoActivity : AppCompatActivity() {
 //        val mediaSource = buildMediaSource(uri)
         simpleExoplayer.prepare(mediaSource)
         vidview.controllerShowTimeoutMs = 0
+        simpleExoplayer.addListener(object: Player.EventListener{
+            override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
+            }
+
+            override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
+            }
+
+            override fun onPlayerError(error: ExoPlaybackException?) {
+            }
+
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                if (playbackState == Player.STATE_BUFFERING) {
+                    progressBar.visibility = View.VISIBLE
+                }
+                else if (playbackState == Player.STATE_READY) {
+                    progressBar.visibility = View.INVISIBLE
+                } else if(playbackState == Player.STATE_ENDED)
+                {
+                    Toast.makeText(this@PlayVideoActivity ,"Your Life has been ended",Toast.LENGTH_SHORT ).show()
+                }
+            }
+
+            override fun onLoadingChanged(isLoading: Boolean) {
+            }
+
+            override fun onPositionDiscontinuity(reason: Int) {
+            }
+
+            override fun onRepeatModeChanged(repeatMode: Int) {
+            }
+
+            override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -312,11 +364,11 @@ class PlayVideoActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
-        Log.e("Resume", "called")
-
-        super.onTopResumedActivityChanged(isTopResumedActivity)
-    }
+//    fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+//        Log.e("Resume", "called")
+//
+//        super.onTopResumedActivityChanged(isTopResumedActivity)
+//    }
 
     override fun onPostResume() {
         Log.e("Post Resume", "called")

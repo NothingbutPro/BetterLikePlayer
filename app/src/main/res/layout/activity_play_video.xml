@@ -104,12 +104,12 @@
 
                 <TextView
                     android:id="@+id/slevidname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="165dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:text="Video"
                     android:textColor="@color/color_white"
-                    android:textSize="20dp">
+                    android:textSize="17dp">
 
                 </TextView>
                 <LinearLayout
