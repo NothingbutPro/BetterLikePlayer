@@ -19,8 +19,7 @@
             android:name=".FurtherActivity.PlayVideoActivity"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
-            android:configChanges=
-                "screenSize|smallestScreenSize|screenLayout|orientation"
+            android:configChanges="screenSize|orientation|screenLayout|navigation"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
 <!--            <layout android:defaultHeight="500dp"-->
 <!--                android:defaultWidth="600dp"-->

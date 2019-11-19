@@ -3,6 +3,7 @@ package com.ics.likeplayer.FurtherActivity
 import android.annotation.SuppressLint
 import android.app.PictureInPictureParams
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
@@ -28,6 +29,8 @@ import com.google.android.exoplayer2.ui.PlayerControlView
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.icu.lang.UCharacter.GraphemeClusterBreak.V
+import android.view.MotionEvent
 import android.view.View
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
@@ -42,12 +45,16 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         @JvmStatic
         lateinit var screenshotPermission: Intent
     }
-
+    private lateinit var thread: Thread
     //    @JvmStatic lateinit  val screenshotPermission :Intent ;
+    //+++++++++++++++++++++++++++++++++For Variables++++++++++++++++++++++++
     private val REQUEST_ID: Int = 1
     private var videoPosition: Long = 0
     private var closepos: Int = 1
     private var StoporNot: Boolean = false
+    private var LockORNot: Boolean = false
+    private var  ScreenLockORNot: Boolean = false
+    //+++++++++++++++++++++++++++++++++++++++++++++++
     private lateinit var simpleExoplayer: SimpleExoPlayer
     private lateinit var controls: PlaybackControlView
     private lateinit var hideli: LinearLayout
@@ -70,6 +77,9 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
     lateinit var RepeatBtn : ImageView
     lateinit var VolumeBtn : ImageView
     lateinit var MuteBtn : ImageView
+    lateinit var Img_lockscreen : ImageView
+    lateinit var Img_rotate : ImageView
+    lateinit var Img_lockscreen_hide : ImageView
     //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //    lateinit var controls: PlaybackControlView
     lateinit var myvideo: String
@@ -81,6 +91,7 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         screenshot = findViewById(com.ics.likeplayer.R.id.screenshot)
         controls = findViewById(com.ics.likeplayer.R.id.controls)
         slevidname = findViewById(com.ics.likeplayer.R.id.slevidname)
+        hideli = findViewById(com.ics.likeplayer.R.id.hideli)
 //         controls = findViewById(R.id.controls)
 //        controls.player = this.vidview
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
@@ -93,6 +104,27 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         screenshot.setOnClickListener {
             takeScreenshot(vidview);
         }
+
+        Img_rotate.setOnClickListener {
+            Toast.makeText(this ,"hey",Toast.LENGTH_LONG).show()
+            if( ScreenLockORNot)
+            {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                ScreenLockORNot =false
+            }else{
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                ScreenLockORNot =true
+            }
+//            if(ActivityInfo.CONFIG_ORIENTATION == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//
+//            }else if(ActivityInfo.CONFIG_ORIENTATION == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+//            {
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//            }
+//            ScreenLockORNot =true
+        }
+
         slevidname.setText(intent.getStringExtra("slevidname").toString())
         PlaynPauseBTn.setOnClickListener {
             if(simpleExoplayer.isPlaying)
@@ -105,7 +137,29 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
                 simpleExoplayer.getPlaybackState();
             }
         }
+        //for Hide and show
+            vidview.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                Toast.makeText(this@PlayVideoActivity , "Hey touch",Toast.LENGTH_LONG).show()
+                if(mainli.visibility ==  View.VISIBLE && controls.visibility ==  View.VISIBLE && tootwa.visibility ==View.VISIBLE){
+                    mainli.visibility = View.GONE
+                    controls.visibility = View.GONE
+                    Img_lockscreen_hide.visibility =  View.GONE
+                    tootwa.visibility =View.GONE
+                }
+                else
+                {
+                    mainli.visibility = View.VISIBLE
+                    controls.visibility = View.VISIBLE
+                    Img_lockscreen_hide.visibility =  View.GONE
+                    tootwa.visibility =View.VISIBLE
+                }
 
+                return v?.onTouchEvent(event) ?: true
+            }
+        })
+
+        //
         pipmode.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
                 && packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
@@ -162,47 +216,53 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         NextBtn = findViewById(R.id.exo_next);
         FastForwardBtn = findViewById(R.id.exo_ffwd);
         RepeatBtn = findViewById(R.id.exo_repeat_toggle);
+        RepeatBtn = findViewById(R.id.exo_repeat_toggle);
 //        VolumeBtn = findViewById(R.id.exo_);
         BackFastForwardBtn = findViewById(R.id.exo_rew);
+        Img_lockscreen = findViewById(com.ics.likeplayer.R.id.img_lockscreen);
+        Img_rotate = findViewById(com.ics.likeplayer.R.id.img_rotate);
+        Img_lockscreen_hide = findViewById(com.ics.likeplayer.R.id.img_lockscreen_hide);
+   //++++++++++++++++++++++++++++++++++++++++++++++++MAin Functions+++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Img_lockscreen_hide.setOnClickListener {
+            if(mainli.visibility ==  View.VISIBLE && controls.visibility ==  View.VISIBLE && Img_lockscreen_hide.visibility ==  View.GONE &&
+                tootwa.visibility ==  View.GONE)
+            {
+                mainli.visibility = View.GONE
+                controls.visibility = View.GONE
+                Img_lockscreen_hide.visibility = View.VISIBLE
+                tootwa.visibility = View.GONE
+            }else{
+                mainli.visibility = View.VISIBLE
+                controls.visibility = View.VISIBLE
+                tootwa.visibility = View.VISIBLE
+                Img_lockscreen_hide.visibility = View.GONE
+            }
+            LockORNot = false
+        }
+
+        Img_lockscreen.setOnClickListener {
+            if(mainli.visibility ==  View.VISIBLE && controls.visibility ==  View.VISIBLE && Img_lockscreen_hide.visibility ==  View.GONE)
+            {
+                mainli.visibility = View.GONE
+                controls.visibility = View.GONE
+                tootwa.visibility = View.GONE
+                Img_lockscreen_hide.visibility = View.VISIBLE
+            }else{
+                mainli.visibility = View.VISIBLE
+                controls.visibility = View.VISIBLE
+                tootwa.visibility = View.VISIBLE
+                Img_lockscreen_hide.visibility = View.GONE
+            }
+            LockORNot = true
+        }
+        //++++++++++++++++++++++++++++++++++++fdjg+++++++++++++++++++++++++++++++++
+
 //        MuteBtn = findViewById(R.id.exo_);
     }
 
     @SuppressLint("NewApi")
     private fun takeScreenshot(vidview: PlayerView) {
         ScreenshotManager.INSTANCE.requestScreenshotPermission(this, REQUEST_ID);
-
-//    try {
-//        croppedBitmap = Bitmap.createBitmap(bitmap, 0, 0, windowSize.x, windowSize.y);
-//    } catch (OutOfMemoryError e) {
-//        Log.d("hey", "Out of memory when cropping bitmap of screen size");
-//        croppedBitmap = bitmap;
-//    }
-//    if (croppedBitmap != bitmap) {
-//        bitmap.recycle();
-//    }
-
-//        var view = this.getWindow().getDecorView();
-//        view.setDrawingCacheEnabled(true);
-//        view.buildDrawingCache();
-//        val b1 = view.getDrawingCache();
-//        val frame =  Rect();
-//        this.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-//        val statusBarHeight = frame.top;
-//
-//        //Find the screen dimensions to create bitmap in the same size.
-//        val width = getWindow().getWindowManager().getDefaultDisplay().width
-//        val height = getWindow().getWindowManager().getDefaultDisplay().height
-//
-//        val b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
-//        view.destroyDrawingCache();
-//         val dir = Environment.getExternalStorageDirectory().absolutePath+File.separator+"myDirectory";
-//     val view =   window.decorView
-//    //create folder
-//    val folder =  File(dir); //folder name
-//    folder.mkdirs();
-//        val window =  Timeline.Window();
-//        MediaStore.Images.Media.insertImage(contentResolver, b, "Screen", "screen");
-
     }
 
     private fun InitializePlayer() {
@@ -373,12 +433,6 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
     override fun onPostResume() {
         Log.e("Post Resume", "called")
 
-//        if(mainli.visibility == View.GONE)
-//        {
-//            mainli.visibility = View.VISIBLE
-//        }else if(mainli.visibility == View.VISIBLE){
-//            mainli.visibility = View.GONE
-//        }
         super.onPostResume()
     }
 
@@ -417,7 +471,6 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
 
 
     }
-
 
 }
 

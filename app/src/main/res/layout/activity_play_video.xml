@@ -43,6 +43,27 @@
             tools:layout_editor_absoluteX="45dp"
             tools:layout_editor_absoluteY="178dp" />
 
+    <LinearLayout
+
+        app:layout_constraintBottom_toBottomOf="@+id/simpleExoPlayerView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:foregroundGravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <ImageView
+            android:visibility="gone"
+            android:layout_gravity="bottom"
+            android:id="@+id/img_lockscreen_hide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:src="@drawable/ic_lock_black_24dp">
+
+        </ImageView>
+    </LinearLayout>
+
     <com.google.android.exoplayer2.ui.PlaybackControlView
         android:id="@+id/controls"
         android:layout_width="match_parent"
@@ -180,14 +201,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tootwa">
 
         <ImageView
-            android:id="@+id/rotate"
+            android:id="@+id/img_rotate"
             android:layout_width="@dimen/size_thirty_five"
             android:layout_height="@dimen/size_thirty_five"
             android:layout_margin="5dp"
 
             android:background="@drawable/drawable_rounded_transparent"
             android:padding="@dimen/size_ten"
-            android:src="@drawable/drawable_volume_selector"
+            android:src="@drawable/ic_screen_rotation_black_24dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
