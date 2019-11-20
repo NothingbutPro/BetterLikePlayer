@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_black"
     android:keepScreenOn="true"
-    tools:context=".FurtherActivity.PlayVideoActivity"
+    tools:context=".FurtherActivity.PlayJavaVideoActivity"
     android:minHeight="@dimen/size_two_hundred">
 
 <!--    <androidx.appcompat.widget.Toolbar-->

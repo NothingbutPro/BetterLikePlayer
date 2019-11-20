@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ics.likeplayer.FurtherActivity.PlayJavaVideoActivity;
 import com.ics.likeplayer.FurtherActivity.PlayVideoActivity;
 import com.ics.likeplayer.Model.AllVideos;
 import com.ics.likeplayer.Model.PojoClass;
@@ -75,7 +76,8 @@ public class MyAllVideosAdpter extends RecyclerView.Adapter<MyAllVideosAdpter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext() , PlayVideoActivity.class);
+//                Intent intent = new Intent(v.getContext() , PlayVideoActivity.class);
+                Intent intent = new Intent(v.getContext() , PlayJavaVideoActivity.class);
                 intent.putExtra("vidurl" , ""+pojoClassArrayList.get(position).getPath());
                 intent.putExtra("slevidname" , ""+pojoClassArrayList.get(position).getName());
                 v.getContext().startActivity(intent);

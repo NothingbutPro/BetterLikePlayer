@@ -35,6 +35,10 @@ import android.view.View
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlaybackControlView
+import it.sephiroth.android.library.uigestures.UIGestureRecognizer
+import it.sephiroth.android.library.uigestures.UIGestureRecognizerDelegate
+import it.sephiroth.android.library.uigestures.UITapGestureRecognizer
+import it.sephiroth.android.library.uigestures.setGestureDelegate
 import kotlinx.android.synthetic.main.activity_play_video.*
 
 
@@ -97,7 +101,21 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
         imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow)
         mainli = findViewById(com.ics.likeplayer.R.id.mainli)
-//        setupTouchListener()
+        //+++++++++++++++++++++++++++++++setting up the gestures+++++++++++++++++++
+        val delegate = UIGestureRecognizerDelegate();
+        // single tap gesture
+        val recognizer1 =  UITapGestureRecognizer(this)
+        recognizer1.tapsRequired = 1
+        recognizer1.touchesRequired = 1
+        recognizer1.tag = "single-tap";
+        recognizer1.actionListener = actionListener
+        delegate.addGestureRecognizer(recognizer1)
+        // optional delegate methods
+        delegate.shouldReceiveTouch = { recognizer -> true }
+        delegate.shouldBegin = { recognizer -> true }
+        delegate.shouldRecognizeSimultaneouslyWithGestureRecognizer = { recognizer, other -> true }
+        vidview.setGestureDelegate(delegate)
+        //++++++++++++++++++
 //        PauseBTn = findViewById(R.id.exo_play);
         InitializePlayer()
         InitializePlayerCOntrols()
@@ -106,7 +124,7 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         }
 
         Img_rotate.setOnClickListener {
-            Toast.makeText(this ,"hey",Toast.LENGTH_LONG).show()
+//            Toast.makeText(this ,"hey",Toast.LENGTH_LONG).show()
             if( ScreenLockORNot)
             {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -137,10 +155,14 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
                 simpleExoplayer.getPlaybackState();
             }
         }
+
+        //++++++++++++++++++++++++++++++LISTNER++++++++++++++++++++++++++++++++++
+
+        //++++++++++++++++++++++++++++++++++++++++
         //for Hide and show
             vidview.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                Toast.makeText(this@PlayVideoActivity , "Hey touch",Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@PlayVideoActivity , "Hey touch",Toast.LENGTH_LONG).show()
                 if(mainli.visibility ==  View.VISIBLE && controls.visibility ==  View.VISIBLE && tootwa.visibility ==View.VISIBLE){
                     mainli.visibility = View.GONE
                     controls.visibility = View.GONE
@@ -207,6 +229,7 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
 //        vidview.start()
 
     }
+
 
 
 
@@ -472,8 +495,13 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
 
 
     }
-
+    // gesture recognizer actionlistener
+    private val actionListener = { recognizer: UIGestureRecognizer ->
+        Toast.makeText(this@PlayVideoActivity ,"CLicked",Toast.LENGTH_LONG).show()
+        // gesture recognized
+    }
 }
+
 
 
 

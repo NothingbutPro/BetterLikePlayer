@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".FurtherActivity.PlayMp3VideoActivity"></activity>
+        <activity android:name=".FurtherActivity.PlayVideoActivity"></activity>
         <activity
-            android:name=".FurtherActivity.PlayVideoActivity"
+            android:name=".FurtherActivity.PlayJavaVideoActivity"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:configChanges="screenSize|orientation|screenLayout|navigation"

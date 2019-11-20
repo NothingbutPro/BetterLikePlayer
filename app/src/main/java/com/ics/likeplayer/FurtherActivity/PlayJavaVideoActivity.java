@@ -1,13 +1,324 @@
 package com.ics.likeplayer.FurtherActivity;
 
+import android.app.PictureInPictureParams;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.PlaybackControlView;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.ics.likeplayer.R;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.ics.likeplayer.ScreenshotManager;
+
 public class PlayJavaVideoActivity extends AppCompatActivity {
+    public SimpleExoPlayer simpleExoplayer;
+     public PlayerView vidview;
+    public PlaybackControlView controls;
+    public  LinearLayout hideli;
+    public LinearLayout pipmode;
+    public LinearLayout mainli;
+    public  LinearLayout controlli;
+    public  LinearLayout simplelin;
+    public  ImageView imghideshow;
+    public ImageView screenshot;
+    public TextView slevidname;
+    private String myvideo;
+//    private View progressBar;
+//+++++++++++++++++++++++++++++++++For Variables++++++++++++++++++++++++
+    public  int REQUEST_ID = 1;
+    public long videoPosition = 0;
+    public int closepos = 1;
+    public Boolean StoporNot = false;
+    public Boolean LockORNot =false;
+    public Boolean ScreenLockORNot = false;
+    //+++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++All Controls+++++++++++++++++++++++++++++++++++++++++++++++++
+ImageView  ReverseBtn ; 
+ImageView  NextBtn ;
+ImageView FastForwardBtn ;
+ImageView BackFastForwardBtn ; 
+ImageView RepeatBtn ; 
+ImageView VolumeBtn ; 
+ImageView MuteBtn ;
+ImageView Img_lockscreen ; 
+ImageView Img_rotate ;
+ImageView Img_lockscreen_hide ;
+private ImageView PlaynPauseBTn;
+private ImageView img_rotate;
+public Context context;
+    //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    private PictureInPictureParams.Builder mPictureInPictureParamsBuilder;
+    private com.google.android.material.appbar.AppBarLayout  tootwa;
+
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setContentView(R.layout.activity_play_video);
         super.onCreate(savedInstanceState);
+        InitializeEverything();
+        InitializePlayer();
+        InitializePlayerControls();
+    }
+
+    private void InitializePlayerControls() {
+        PlaynPauseBTn = findViewById(com.ics.likeplayer.R.id.playnpause);
+        ReverseBtn = findViewById(R.id.exo_prev);
+        NextBtn = findViewById(R.id.exo_next);
+        FastForwardBtn = findViewById(R.id.exo_ffwd);
+        RepeatBtn = findViewById(R.id.exo_repeat_toggle);
+        RepeatBtn = findViewById(R.id.exo_repeat_toggle);
+//        VolumeBtn = findViewById(R.id.exo_);
+        BackFastForwardBtn = findViewById(R.id.exo_rew);
+        tootwa = findViewById(R.id.tootwa);
+        Img_lockscreen = findViewById(com.ics.likeplayer.R.id.img_lockscreen);
+        img_rotate = findViewById(com.ics.likeplayer.R.id.img_rotate);
+        Img_lockscreen_hide = findViewById(com.ics.likeplayer.R.id.img_lockscreen_hide);
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++MAin Functions+++++++++++++++++++++++++++++++++++++++++++++++++++++
+        screenshot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeScreenshot(vidview);
+            }
+        });
+        img_rotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( ScreenLockORNot)
+                {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    ScreenLockORNot =false;
+                }else{
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    ScreenLockORNot =true;
+                }
+            }
+        });
+
+        Img_lockscreen_hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mainli.getVisibility() ==  View.VISIBLE && controls.getVisibility()  ==  View.VISIBLE && Img_lockscreen_hide.getVisibility()  ==  View.GONE &&
+                        tootwa.getVisibility() ==  View.GONE)
+                {
+                    mainli.setVisibility( View.GONE);
+                    controls.setVisibility( View.GONE);
+                    Img_lockscreen_hide.setVisibility(View.VISIBLE);
+                    tootwa.setVisibility(View.GONE);
+                }else{
+                    mainli.setVisibility(View.VISIBLE);
+                    controls.setVisibility(View.VISIBLE);
+                    tootwa.setVisibility(View.VISIBLE);
+                    Img_lockscreen_hide.setVisibility(View.GONE);
+                }
+                LockORNot = false;
+            }
+        });
+
+        Img_lockscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mainli.getVisibility() ==  View.VISIBLE && controls.getVisibility() ==  View.VISIBLE && Img_lockscreen_hide.getVisibility() ==  View.GONE)
+                {
+                    mainli.setVisibility(View.GONE);
+                    controls.setVisibility(View.GONE);
+                    tootwa.setVisibility(View.GONE);
+                    Img_lockscreen_hide.setVisibility(View.VISIBLE);
+                }else{
+                    mainli.setVisibility(View.VISIBLE);
+                    controls.setVisibility(View.VISIBLE);
+                    tootwa.setVisibility(View.VISIBLE);
+                    Img_lockscreen_hide.setVisibility(View.GONE);
+                }
+                LockORNot = true;
+            }
+        });
+        //++++++++++++++++++++++++++++++++++++fdjg+++++++++++++++++++++++++++++++++
+    }
+
+    private void takeScreenshot(PlayerView vidview) {
+        ScreenshotManager.INSTANCE.requestScreenshotPermission(this, REQUEST_ID);
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        if (isInPictureInPictureMode) {
+            Toast.makeText(this, "You done it well", Toast.LENGTH_LONG).show();
+
+            // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
+        } else {
+            if (mainli.getVisibility() == View.VISIBLE) {
+                // imghideshow.rotation = (-90).toFloat();
+                mainli.setVisibility(View.GONE);
+
+            } else {
+                //    imghideshow.rotation = (90).toFloat();
+                mainli.setVisibility(View.VISIBLE) ;
+            }
+            if (StoporNot) {
+                simpleExoplayer.stop();
+//                    finish()
+            }
+//                simpleExoplayer.stop()
+//                finish()
+            // Restore the full-screen UI.
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == REQUEST_ID) {
+//            ScreenshotManager.INSTANCE.onActivityResult(resultCode, data);
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+            ScreenshotManager.INSTANCE.takeScreenshot(this, data);
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void InitializeEverything() {
+        vidview = findViewById(com.ics.likeplayer.R.id.simpleExoPlayerView);
+        screenshot = findViewById(com.ics.likeplayer.R.id.screenshot);
+        controls = findViewById(com.ics.likeplayer.R.id.controls);
+        slevidname = findViewById(com.ics.likeplayer.R.id.slevidname);
+        hideli = findViewById(com.ics.likeplayer.R.id.hideli);
+//        progressBar = findViewById(com.ics.likeplayer.R.id.progressBar);
+//         controls = findViewById(R.id.controls)
+//        controls.player = this.vidview
+        pipmode = findViewById(com.ics.likeplayer.R.id.pipmode);
+        imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow);
+        mainli = findViewById(com.ics.likeplayer.R.id.mainli);
+    }
+
+    private void InitializePlayer() {
+
+            simpleExoplayer = ExoPlayerFactory.newSimpleInstance(
+                    this,
+                    new DefaultRenderersFactory(this),
+                    new DefaultTrackSelector(),new DefaultLoadControl()
+            );
+            prepareExoplayer();
+
+//        simpleExoPlayerView.player = simpleExoplayer
+//        simpleExoplayer.seekTo(playbackPosition)
+//        simpleExoplayer.playWhenReady = true
+//        simpleExoplayer.addListener(this)
+
+    }
+
+    private void prepareExoplayer() {
+        vidview.setPlayer(simpleExoplayer);
+        myvideo = getIntent().getStringExtra("vidurl");
+        Uri uri = Uri.parse(myvideo);
+//        MediaSource mediaSource = buildMediaSource(uri);
+        MediaSource mediaSource = buildMediaSource(uri);
+        simpleExoplayer.prepare(mediaSource, true, false);
+//        simpleExoplayer.setV
+        simpleExoplayer.setPlayWhenReady(true);
+        controls.setPlayer(simpleExoplayer);
+        pipmode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    enterPIPMode();
+
+
+            }
+        });
+        vidview.setControllerShowTimeoutMs(0);
+        simpleExoplayer.addListener(new Player.EventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playbackState == Player.STATE_BUFFERING) {
+//                    progressBar.getVisibility() = View.VISIBLE;
+                }
+                else if (playbackState == Player.STATE_READY) {
+//                    progressBar.getVisibility() = View.INVISIBLE;
+                } else if(playbackState == Player.STATE_ENDED)
+                {
+                    Toast.makeText(getApplicationContext() ,"Your Life has been ended",Toast.LENGTH_SHORT ).show();
+                }
+            }
+        });
+    }
+
+    private MediaSource buildMediaSource( Uri uris) {
+        return new ExtractorMediaSource.Factory(
+                new DefaultDataSourceFactory(PlayJavaVideoActivity.this,"Exoplayer-local")).
+                createMediaSource(uris);
+         
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        Toast.makeText(this, "you are in onUserLeaveHint ", Toast.LENGTH_LONG).show();
+        super.onUserLeaveHint();
+        enterPIPMode();
+    }
+
+    private void enterPIPMode() {
+
+            videoPosition = simpleExoplayer.getCurrentPosition();
+            vidview.setUseController(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mainli.setVisibility(View.GONE);
+                PictureInPictureParams.Builder params = new PictureInPictureParams.Builder();
+                this.enterPictureInPictureMode(params.build());
+                Toast.makeText(this, "you are if ", Toast.LENGTH_LONG).show();
+//                if(mainli.visibility == View.GONE)
+//                {
+//                    mainli.visibility = View.VISIBLE
+//                }else if(mainli.visibility == View.VISIBLE){
+//                    mainli.visibility = View.GONE
+//                }
+            }
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        Log.e("Post Resume", "called");
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e("onStop", "called");
+        StoporNot = true;
+
+        super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        simpleExoplayer.stop();
+        
     }
 }
