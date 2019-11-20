@@ -5,10 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Path;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +23,10 @@ import android.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.github.nisrulz.sensey.MovementDetector;
+import com.github.nisrulz.sensey.Sensey;
+import com.github.nisrulz.sensey.TouchTypeDetector;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
@@ -33,7 +41,7 @@ import com.ics.likeplayer.R;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.ics.likeplayer.ScreenshotManager;
 
-public class PlayJavaVideoActivity extends AppCompatActivity {
+public class PlayJavaVideoActivity extends AppCompatActivity  {
     public SimpleExoPlayer simpleExoplayer;
      public PlayerView vidview;
     public PlaybackControlView controls;
@@ -69,20 +77,144 @@ ImageView Img_lockscreen_hide ;
 private ImageView PlaynPauseBTn;
 private ImageView img_rotate;
 public Context context;
+
     //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private PictureInPictureParams.Builder mPictureInPictureParamsBuilder;
     private com.google.android.material.appbar.AppBarLayout  tootwa;
+//+++++++++++++++++++++++++++++++++++++++FOR GESTURES++++++++++++++++++
+private GestureDetector mDetector;
+    private GestureDetector gestureDetector;
+    private TouchTypeDetector.TouchTypListener touchTypListener;
+    //++++++++++++++++++++++++++++++++
 
 
-
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Sensey.getInstance().setupDispatchTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_play_video);
         super.onCreate(savedInstanceState);
+        context = PlayJavaVideoActivity.this;
         InitializeEverything();
         InitializePlayer();
         InitializePlayerControls();
+//
+//        gesture.addListener(new GestureListener() {
+//            @Override
+//            public void onPress(MotionEvent motionEvent) {
+//
+//            }
+//
+//            @Override
+//            public void onTap(MotionEvent motionEvent) {
+//
+//            }
+//
+//            @Override
+//            public void onDrag(MotionEvent motionEvent) {
+//
+//            }
+//
+//            @Override
+//            public void onMove(MotionEvent motionEvent) {
+//
+//            }
+//
+//            @Override
+//            public void onRelease(MotionEvent motionEvent) {
+//
+//            }
+//
+//            @Override
+//            public void onLongPress(MotionEvent motionEvent) {
+//
+//            }
+//
+//            @Override
+//            public void onMultiTap(MotionEvent motionEvent, int clicks) {
+//
+//            }
+//        });
+        Sensey.getInstance().init(context);
+        touchTypListener=new TouchTypeDetector.TouchTypListener() {
+            @Override public void onTwoFingerSingleTap() {
+                // Two finger single tap
+            }
+
+            @Override public void onThreeFingerSingleTap() {
+                // Three finger single tap
+            }
+
+            @Override public void onDoubleTap() {
+                // Double tap
+            }
+
+            @Override
+            public void onScroll(int scrollDirection) {
+                switch (scrollDirection) {
+                    case TouchTypeDetector.SCROLL_DIR_UP:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling up", Toast.LENGTH_SHORT).show();
+                        // Scrolling Up
+                        break;
+                    case TouchTypeDetector.SCROLL_DIR_DOWN:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling Down", Toast.LENGTH_SHORT).show();
+                        // Scrolling Down
+                        break;
+                    case TouchTypeDetector.SCROLL_DIR_LEFT:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling SCROLL_DIR_LEFT", Toast.LENGTH_SHORT).show();
+                        // Scrolling Left
+                        break;
+                    case TouchTypeDetector.SCROLL_DIR_RIGHT:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling SCROLL_DIR_RIGHT", Toast.LENGTH_SHORT).show();
+
+                        // Scrolling Right
+                        break;
+                    default:
+                        // Do nothing
+                        break;
+                }
+            }
+
+            @Override public void onSingleTap() {
+                // Single tap
+            }
+
+            @Override public void onSwipe(int swipeDirection) {
+                switch (swipeDirection) {
+                    case TouchTypeDetector.SWIPE_DIR_UP:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling SWIPE_DIR_UP", Toast.LENGTH_SHORT).show();
+
+                        // Swipe Up
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_DOWN:
+
+                        // Swipe Down
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_LEFT:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling SWIPE_DIR_LEFT", Toast.LENGTH_SHORT).show();
+
+                        // Swipe Left
+                        break;
+                    case TouchTypeDetector.SWIPE_DIR_RIGHT:
+                        Toast.makeText(PlayJavaVideoActivity.this, "Scrolling SWIPE_DIR_RIGHT", Toast.LENGTH_SHORT).show();
+
+                        // Swipe Right
+                        break;
+                    default:
+                        //do nothing
+                        break;
+                }
+            }
+
+            @Override public void onLongPress() {
+                // Long press
+            }
+        };
+        Sensey.getInstance().startTouchTypeDetection(PlayJavaVideoActivity.this, touchTypListener);
     }
 
     private void InitializePlayerControls() {
@@ -98,6 +230,8 @@ public Context context;
         Img_lockscreen = findViewById(com.ics.likeplayer.R.id.img_lockscreen);
         img_rotate = findViewById(com.ics.likeplayer.R.id.img_rotate);
         Img_lockscreen_hide = findViewById(com.ics.likeplayer.R.id.img_lockscreen_hide);
+
+        // get the gesture detector
 
         //++++++++++++++++++++++++++++++++++++++++++++++++MAin Functions+++++++++++++++++++++++++++++++++++++++++++++++++++++
         screenshot.setOnClickListener(new View.OnClickListener() {
@@ -321,4 +455,7 @@ public Context context;
         simpleExoplayer.stop();
         
     }
+
+
+
 }

@@ -53,7 +53,7 @@ dependencies {
     implementation 'it.sephiroth.android.library.uigestures:uigesture-recognizer-kotlin:1.2.7'
 //    implementation 'com.github.sephiroth74:AndroidUIGestureRecognizer:v1.2.7'
     //++++++++++++++++++++++++++++++++++++++++++
-
+    implementation 'com.github.nisrulz:sensey:1.8.0'
     //for video player
 
     implementation 'com.google.android.exoplayer:exoplayer:2.7.2'
