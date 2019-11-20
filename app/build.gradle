@@ -13,6 +13,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    packagingOptions {
+        exclude 'META-INF/library_release.kotlin_module'
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -45,7 +48,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++For gestures++++++++++++++++++++++++++++++
+    implementation 'it.sephiroth.android.library.uigestures:uigesture-recognizer-kotlin:1.2.7'
+    implementation 'com.github.sephiroth74:AndroidUIGestureRecognizer:v1.2.7'
+    //++++++++++++++++++++++++++++++++++++++++++
 
     //for video player
 

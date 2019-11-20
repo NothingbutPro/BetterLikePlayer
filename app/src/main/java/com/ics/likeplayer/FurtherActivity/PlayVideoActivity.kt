@@ -97,7 +97,7 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
         pipmode = findViewById(com.ics.likeplayer.R.id.pipmode)
         imghideshow = findViewById(com.ics.likeplayer.R.id.imghideshow)
         mainli = findViewById(com.ics.likeplayer.R.id.mainli)
-
+//        setupTouchListener()
 //        PauseBTn = findViewById(R.id.exo_play);
         InitializePlayer()
         InitializePlayerCOntrols()
@@ -154,7 +154,6 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
                     Img_lockscreen_hide.visibility =  View.GONE
                     tootwa.visibility =View.VISIBLE
                 }
-
                 return v?.onTouchEvent(event) ?: true
             }
         })
@@ -208,6 +207,8 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
 //        vidview.start()
 
     }
+
+
 
     private fun InitializePlayerCOntrols() {
 //        PlaynPauseBTn = findViewById(R.id.);
