@@ -53,7 +53,6 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
     public  ImageView imghideshow;
     public ImageView screenshot;
     public TextView slevidname;
-    private String myvideo;
 //    private View progressBar;
 //+++++++++++++++++++++++++++++++++For Variables++++++++++++++++++++++++
     public  int REQUEST_ID = 1;
@@ -62,27 +61,27 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
     public Boolean StoporNot = false;
     public Boolean LockORNot =false;
     public Boolean ScreenLockORNot = false;
+    public Context context;
     //+++++++++++++++++++++++++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++All Controls+++++++++++++++++++++++++++++++++++++++++++++++++
-ImageView  ReverseBtn ; 
-ImageView  NextBtn ;
-ImageView FastForwardBtn ;
-ImageView BackFastForwardBtn ; 
-ImageView RepeatBtn ; 
-ImageView VolumeBtn ; 
-ImageView MuteBtn ;
-ImageView Img_lockscreen ; 
-ImageView Img_rotate ;
-ImageView Img_lockscreen_hide ;
-private ImageView PlaynPauseBTn;
-private ImageView img_rotate;
-public Context context;
-
+    ImageView  ReverseBtn ;
+    ImageView  NextBtn ;
+    ImageView FastForwardBtn ;
+    ImageView BackFastForwardBtn ;
+    ImageView RepeatBtn ;
+    ImageView VolumeBtn ;
+    ImageView MuteBtn ;
+    ImageView Img_lockscreen ;
+    ImageView Img_rotate ;
+    ImageView Img_lockscreen_hide ;
+    private String myvideo;
+    private ImageView PlaynPauseBTn;
+    private ImageView img_rotate;
     //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private PictureInPictureParams.Builder mPictureInPictureParamsBuilder;
     private com.google.android.material.appbar.AppBarLayout  tootwa;
 //+++++++++++++++++++++++++++++++++++++++FOR GESTURES++++++++++++++++++
-private GestureDetector mDetector;
+    private GestureDetector mDetector;
     private GestureDetector gestureDetector;
     private TouchTypeDetector.TouchTypListener touchTypListener;
     //++++++++++++++++++++++++++++++++
@@ -180,6 +179,16 @@ private GestureDetector mDetector;
             }
 
             @Override public void onSingleTap() {
+                if(mainli.getVisibility() ==View.VISIBLE && controls.getVisibility() == View.VISIBLE && tootwa.getVisibility() == View.VISIBLE  )
+                {
+                    mainli.setVisibility(View.GONE);
+                    controls.setVisibility(View.GONE);
+                    tootwa.setVisibility(View.GONE);
+                }else {
+                    mainli.setVisibility(View.VISIBLE);
+                    controls.setVisibility(View.VISIBLE);
+                    tootwa.setVisibility(View.VISIBLE);
+                }
                 // Single tap
             }
 
@@ -308,11 +317,11 @@ private GestureDetector mDetector;
             // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
         } else {
             if (mainli.getVisibility() == View.VISIBLE) {
-                // imghideshow.rotation = (-90).toFloat();
+                 imghideshow.setRotation((-90));
                 mainli.setVisibility(View.GONE);
 
             } else {
-                //    imghideshow.rotation = (90).toFloat();
+                    imghideshow.setRotation((90));
                 mainli.setVisibility(View.VISIBLE) ;
             }
             if (StoporNot) {
