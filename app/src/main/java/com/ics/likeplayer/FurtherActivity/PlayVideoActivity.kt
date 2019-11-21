@@ -308,7 +308,7 @@ class PlayVideoActivity : AppCompatActivity(),Player.EventListener {
 
         if (requestCode == REQUEST_ID) {
 //            ScreenshotManager.INSTANCE.onActivityResult(resultCode, data);
-            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show()
             ScreenshotManager.INSTANCE.takeScreenshot(this, data)
 //            mainli.visibility =View.VISIBLE
 //            controlli.visibility =View.VISIBLE

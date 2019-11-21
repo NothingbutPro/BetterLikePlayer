@@ -47,7 +47,7 @@ class AllVideoActivity : AppCompatActivity() {
         }
         if(!RootDirname.isBlank() || !RootDirname.isEmpty())
         {
-            Toast.makeText(this , "Directory Name"+RootDirname,Toast.LENGTH_LONG).show()
+//            Toast.makeText(this , "Directory Name"+RootDirname,Toast.LENGTH_LONG).show()
 //            File = Uri.fromFile(File(RootDirname.toUri())
             val File = File(RootDirname);
             if(File.exists())

@@ -54,6 +54,8 @@ dependencies {
 //    implementation 'com.github.sephiroth74:AndroidUIGestureRecognizer:v1.2.7'
     //++++++++++++++++++++++++++++++++++++++++++
     implementation 'com.github.nisrulz:sensey:1.8.0'
+//    implementation 'com.github.hearsilent:DiscreteSlider:1.1.2'
+    implementation 'com.hmomeni.verticalslider:verticalslider:0.2.0'
     //for video player
 
     implementation 'com.google.android.exoplayer:exoplayer:2.7.2'

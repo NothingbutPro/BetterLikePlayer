@@ -29,19 +29,17 @@
 <!--        >-->
 
 
-        <com.google.android.exoplayer2.ui.PlayerView
-
-            app:layout_constraintTop_toBottomOf="@+id/tootwa"
-            android:id="@+id/simpleExoPlayerView"
-            android:layout_width="match_parent"
-            app:use_controller="false"
-            app:auto_show="true"
-            app:player_layout_id="@layout/customexoplayerview"
-            android:layout_height="match_parent"
-            app:surface_type="texture_view"
-            app:resize_mode="fixed_width"
-            tools:layout_editor_absoluteX="45dp"
-            tools:layout_editor_absoluteY="178dp" />
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/simpleExoPlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:auto_show="true"
+        app:layout_constraintTop_toBottomOf="@+id/tootwa"
+        app:player_layout_id="@layout/customexoplayerview"
+        app:resize_mode="fixed_width"
+        app:surface_type="texture_view"
+        app:use_controller="false"
+        tools:layout_editor_absoluteX="45dp" />
 
     <LinearLayout
 
@@ -49,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:foregroundGravity="bottom"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
         <ImageView
             android:visibility="gone"
@@ -63,6 +61,7 @@
 
         </ImageView>
     </LinearLayout>
+
 
     <com.google.android.exoplayer2.ui.PlaybackControlView
         android:id="@+id/controls"
@@ -159,6 +158,7 @@
 
                             </ImageView>
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -192,6 +192,112 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toTopOf="@+id/controls"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="10%"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verticalSlider" />
+        <com.hmomeni.verticalslider.VerticalSlider
+            android:visibility="gone"
+            android:id="@+id/verticalSlider"
+            android:layout_width="wrap_content"
+            android:layout_height="290dp"
+            app:vs_cornerRadius="0dp"
+            app:vs_iconHigh="@drawable/ic_volume_up"
+            app:vs_iconLow="@drawable/ic_volume_off"
+            app:vs_iconMedium="@drawable/drawable_volume_selector"
+            app:vs_max="100"
+            app:vs_progress="10" />
+
+
+<!--        <hearsilent.discreteslider.DiscreteSlider-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:id="@+id/volumeslider"-->
+<!--            android:rotation="180"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:paddingLeft="16dp"-->
+<!--            android:paddingRight="16dp"-->
+<!--            app:ds_count="21"-->
+<!--            app:ds_inactiveTrackColor="#3DD81B60"-->
+<!--            app:ds_maxProgress="100"-->
+<!--            app:ds_minProgress="0"-->
+<!--            app:ds_mode="normal"-->
+<!--            app:ds_orientation="vertical"-->
+<!--            app:ds_thumbColor="@color/colorAccent"-->
+<!--            app:ds_thumbPressedColor="#1FD81B60"-->
+<!--            app:ds_thumbRadius="7dp"-->
+<!--            app:ds_tickMarkColor="#3DFFFFFF"-->
+<!--            app:ds_tickMarkDashLength="1dp"-->
+<!--            app:ds_tickMarkInactiveColor="#1FD81B60"-->
+<!--            app:ds_tickMarkPatterns="dot,dash"-->
+<!--            app:ds_trackColor="@color/colorAccent"-->
+<!--            app:ds_trackWidth="4dp"-->
+<!--            app:ds_valueLabelTextColor="#FFF"-->
+<!--            app:ds_valueLabelTextSize="16sp"-->
+<!--            app:ds_valueLabelVisible="true">-->
+
+<!--        </hearsilent.discreteslider.DiscreteSlider>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toTopOf="@+id/controls"
+        app:layout_constraintRight_toRightOf="parent"
+       >
+        <TextView
+            android:id="@+id/brightprogressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="10%"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verticalSlider" />
+        <com.hmomeni.verticalslider.VerticalSlider
+            android:id="@+id/brightverticalSlider"
+            android:layout_width="wrap_content"
+            android:layout_height="290dp"
+            app:vs_cornerRadius="0dp"
+            app:vs_iconHigh="@drawable/ic_volume_up"
+            app:vs_iconLow="@drawable/ic_volume_off"
+            app:vs_iconMedium="@drawable/drawable_volume_selector"
+            app:vs_max="100"
+            app:vs_progress="10" />
+
+
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/mainli"
         android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.net.Uri;
 import android.os.Build;
@@ -37,11 +38,16 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlaybackControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.hmomeni.verticalslider.VerticalSlider;
 import com.ics.likeplayer.R;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.ics.likeplayer.ScreenshotManager;
 
-public class PlayJavaVideoActivity extends AppCompatActivity  {
+import java.util.Arrays;
+
+
+
+public class PlayJavaVideoActivity extends AppCompatActivity   {
     public SimpleExoPlayer simpleExoplayer;
      public PlayerView vidview;
     public PlaybackControlView controls;
@@ -77,6 +83,8 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
     private String myvideo;
     private ImageView PlaynPauseBTn;
     private ImageView img_rotate;
+    private VerticalSlider verticalSlider;
+
     //+++++++++++++++++++++++++++++++++++++++End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     private PictureInPictureParams.Builder mPictureInPictureParamsBuilder;
     private com.google.android.material.appbar.AppBarLayout  tootwa;
@@ -84,6 +92,7 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
     private GestureDetector mDetector;
     private GestureDetector gestureDetector;
     private TouchTypeDetector.TouchTypListener touchTypListener;
+//    private DiscreteSlider mSlider;
     //++++++++++++++++++++++++++++++++
 
 
@@ -101,43 +110,7 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
         InitializeEverything();
         InitializePlayer();
         InitializePlayerControls();
-//
-//        gesture.addListener(new GestureListener() {
-//            @Override
-//            public void onPress(MotionEvent motionEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onTap(MotionEvent motionEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onDrag(MotionEvent motionEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onMove(MotionEvent motionEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onRelease(MotionEvent motionEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onLongPress(MotionEvent motionEvent) {
-//
-//            }
-//
-//            @Override
-//            public void onMultiTap(MotionEvent motionEvent, int clicks) {
-//
-//            }
-//        });
+
         Sensey.getInstance().init(context);
         touchTypListener=new TouchTypeDetector.TouchTypListener() {
             @Override public void onTwoFingerSingleTap() {
@@ -158,9 +131,26 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
                     case TouchTypeDetector.SCROLL_DIR_UP:
                         Toast.makeText(PlayJavaVideoActivity.this, "Scrolling up", Toast.LENGTH_SHORT).show();
                         // Scrolling Up
+                        if(verticalSlider.getVisibility() == View.GONE) {
+                            verticalSlider.setVisibility(View.VISIBLE);
+                            if (verticalSlider.getProgress() < verticalSlider.getMax()) {
+                                verticalSlider.setProgress(verticalSlider.getProgress() + 5);
+
+                            } else if (verticalSlider.getProgress() == 100) {
+                                verticalSlider.setProgress(verticalSlider.getProgress());
+                            }
+                        }
                         break;
                     case TouchTypeDetector.SCROLL_DIR_DOWN:
                         Toast.makeText(PlayJavaVideoActivity.this, "Scrolling Down", Toast.LENGTH_SHORT).show();
+                        if(verticalSlider.getVisibility() == View.GONE) {
+                            if (verticalSlider.getProgress() != 0) {
+                                verticalSlider.setProgress(verticalSlider.getProgress() - 5);
+                                verticalSlider.setVisibility(View.GONE);
+                            } else {
+                                verticalSlider.setProgress(verticalSlider.getProgress());
+                            }
+                        }
                         // Scrolling Down
                         break;
                     case TouchTypeDetector.SCROLL_DIR_LEFT:
@@ -197,6 +187,8 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
                     case TouchTypeDetector.SWIPE_DIR_UP:
                         Toast.makeText(PlayJavaVideoActivity.this, "Scrolling SWIPE_DIR_UP", Toast.LENGTH_SHORT).show();
 
+//                        verticalSlider.getOnProgressChangeListener().onChanged(10,100);
+
                         // Swipe Up
                         break;
                     case TouchTypeDetector.SWIPE_DIR_DOWN:
@@ -226,6 +218,55 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
         Sensey.getInstance().startTouchTypeDetection(PlayJavaVideoActivity.this, touchTypListener);
     }
 
+//    private void setUpView() {
+//        mSlider.setTrackWidth(Utils.convertDpToPixel(4, this));
+//        mSlider.setTrackColor(0xFFD81B60);
+//        mSlider.setInactiveTrackColor(0x3DD81B60);
+//
+//        mSlider.setThumbRadius(Utils.convertDpToPixel(6, this));
+//        mSlider.setThumbColor(0xFFD81B60);
+//        mSlider.setThumbPressedColor(0x1FD81B60);
+//        mSlider.setLeft(10);
+//        mSlider.setTickMarkColor(0x3DFFFFFF);
+//        mSlider.setTickMarkInactiveColor(0x1FD81B60);
+//        mSlider.setTickMarkPatterns(
+//                Arrays.asList(new Dot(), new Dash(Utils.convertDpToPixel(1, this))));
+//
+//        mSlider.setValueLabelTextColor(Color.WHITE);
+//        mSlider.setValueLabelTextSize(Utils.convertSpToPixel(16, this));
+//        mSlider.setValueLabelFormatter(new DiscreteSlider.ValueLabelFormatter() {
+//
+//            @Override
+//            public String getLabel(int input) {
+//                return Integer.toString(input);
+//            }
+//        });
+//
+//        mSlider.setCount(21);
+//        mSlider.setMode(DiscreteSlider.MODE_NORMAL);
+//
+//        mSlider.setMinProgress(5);
+//
+//        mSlider.setOnValueChangedListener(new DiscreteSlider.OnValueChangedListener() {
+//
+//            @Override
+//            public void onValueChanged(int progress, boolean fromUser) {
+//                super.onValueChanged(progress, fromUser);
+//                Log.i("DiscreteSlider", "Progress: " + progress + ", fromUser: " + fromUser);
+//            }
+//
+//            @Override
+//            public void onValueChanged(int minProgress, int maxProgress, boolean fromUser) {
+//                super.onValueChanged(minProgress, maxProgress, fromUser);
+//                Log.i("DiscreteSlider",
+//                        "MinProgress: " + minProgress + ", MaxProgress: " + maxProgress +
+//                                ", fromUser: " + fromUser);
+//            }
+//        });
+//
+//        mSlider.setClickable(true);
+//    }
+
     private void InitializePlayerControls() {
         PlaynPauseBTn = findViewById(com.ics.likeplayer.R.id.playnpause);
         ReverseBtn = findViewById(R.id.exo_prev);
@@ -233,6 +274,7 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
         FastForwardBtn = findViewById(R.id.exo_ffwd);
         RepeatBtn = findViewById(R.id.exo_repeat_toggle);
         RepeatBtn = findViewById(R.id.exo_repeat_toggle);
+        verticalSlider = findViewById(R.id.verticalSlider);
 //        VolumeBtn = findViewById(R.id.exo_);
         BackFastForwardBtn = findViewById(R.id.exo_rew);
         tootwa = findViewById(R.id.tootwa);
@@ -243,6 +285,7 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
         // get the gesture detector
 
         //++++++++++++++++++++++++++++++++++++++++++++++++MAin Functions+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
         screenshot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -352,6 +395,7 @@ public class PlayJavaVideoActivity extends AppCompatActivity  {
         controls = findViewById(com.ics.likeplayer.R.id.controls);
         slevidname = findViewById(com.ics.likeplayer.R.id.slevidname);
         hideli = findViewById(com.ics.likeplayer.R.id.hideli);
+//        mSlider = findViewById(R.id.volumeslider);
 //        progressBar = findViewById(com.ics.likeplayer.R.id.progressBar);
 //         controls = findViewById(R.id.controls)
 //        controls.player = this.vidview
