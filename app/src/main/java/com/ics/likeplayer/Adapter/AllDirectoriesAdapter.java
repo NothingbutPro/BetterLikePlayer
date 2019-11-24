@@ -1,5 +1,6 @@
 package com.ics.likeplayer.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -36,14 +37,19 @@ public class AllDirectoriesAdapter extends RecyclerView.Adapter<AllDirectoriesAd
     @Override
     public void onBindViewHolder(AllDirectoriesAdapter.ViewHolder holder, int position) {
         Log.e("Dire namne is",""+pojoClassArrayList.get(position).getName());
-        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName());
+//        pojoClassArrayList.set(position , )
+//        DirectoriesList.set
+        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName() +" "+ pojoClassArrayList.get(position).getNo_of_SOngs());
         holder.Dir_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext() , AllVideoActivity.class);
                 intent.putExtra("dirpath" , ""+pojoClassArrayList.get(position).getBaseAddress());
+                intent.putExtra("sectionvid" , ""+pojoClassArrayList.get(position).getName());
                 intent.putExtra("nofsongs" , ""+pojoClassArrayList.get(position).getNo_of_SOngs());
                 v.getContext().startActivity(intent);
+                ((Activity)context).finish();
+                Log.e("aleardy " , "called");
             }
         });
 //        holder.singer_name.setText(pojoClassArrayList.get(position).getSinger_name());

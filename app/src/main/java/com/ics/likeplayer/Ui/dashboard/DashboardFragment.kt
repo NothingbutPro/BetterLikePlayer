@@ -83,7 +83,7 @@ class DashboardFragment : Fragment() {
                     //   val DIrname = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME))
                     val title =
                         cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-                    Toast.makeText(activity,"Title is"+DIrname ,Toast.LENGTH_LONG).show()
+//                    Toast.makeText(activity,"Title is"+DIrname ,Toast.LENGTH_LONG).show()
                     //for getting directories
 
                     if (path != null && path!!.endsWith(".mp3")) {
@@ -125,11 +125,11 @@ class DashboardFragment : Fragment() {
 
             else{
 
-                Toast.makeText(activity,"Title is NOne",Toast.LENGTH_LONG).show()
+//                Toast.makeText(activity,"Title is NOne",Toast.LENGTH_LONG).show()
 
             }
         }else{
-            Toast.makeText(activity,"Cursor is  is NOne",Toast.LENGTH_LONG).show()
+//            Toast.makeText(activity,"Cursor is  is NOne",Toast.LENGTH_LONG).show()
         }
     }
 }

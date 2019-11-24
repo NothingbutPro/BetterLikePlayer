@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * Created by kuldeep on 13/02/18.
  */
 
-public class Mp3OnlyAdapter extends RecyclerView.Adapter<Mp3OnlyAdapter.ViewHolder>  {
+public class Mp3OnlyAdapter extends RecyclerView.Adapter<Mp3OnlyAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<DIrectories_Mp3_Folders> pojoClassArrayList;
@@ -39,6 +39,7 @@ public class Mp3OnlyAdapter extends RecyclerView.Adapter<Mp3OnlyAdapter.ViewHold
         this.context = context;
         this.pojoClassArrayList = pojoClassArrayList;
     }
+
     @Override
     public Mp3OnlyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -49,14 +50,14 @@ public class Mp3OnlyAdapter extends RecyclerView.Adapter<Mp3OnlyAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(Mp3OnlyAdapter.ViewHolder holder, int position) {
-        Log.e("Dire namne is",""+pojoClassArrayList.get(position).getName());
-        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName());
+        Log.e("Dire namne is", "" + pojoClassArrayList.get(position).getName());
+        holder.Dir_Name.setText(pojoClassArrayList.get(position).getName() + "" + pojoClassArrayList.get(position).getNo_of_SOngs());
         holder.Dir_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext() , AllMp3Activities.class);
-                intent.putExtra("dirpath" , ""+pojoClassArrayList.get(position).getBaseAddress());
-                intent.putExtra("nofsongs" , ""+pojoClassArrayList.get(position).getNo_of_SOngs());
+                Intent intent = new Intent(v.getContext(), AllMp3Activities.class);
+                intent.putExtra("dirpath", "" + pojoClassArrayList.get(position).getBaseAddress());
+                intent.putExtra("nofsongs", "" + pojoClassArrayList.get(position).getNo_of_SOngs());
                 v.getContext().startActivity(intent);
             }
         });
@@ -66,20 +67,19 @@ public class Mp3OnlyAdapter extends RecyclerView.Adapter<Mp3OnlyAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount()   {
+    public int getItemCount() {
         return pojoClassArrayList.size();
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Dir_Name,singer_name,time;
+        TextView Dir_Name, singer_name, time;
 
         public ViewHolder(View view) {
             super(view);
 
-            Dir_Name =  view.findViewById(R.id.dir_name);
+            Dir_Name = view.findViewById(R.id.dir_name);
 //            singer_name =  view.findViewById(R.id.singer_name);
 //            time =  view.findViewById(R.id.time);
         }

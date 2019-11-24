@@ -15,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ics.likeplayer.FurtherActivity.PlayJavaVideoActivity;
 import com.ics.likeplayer.FurtherActivity.PlayVideoActivity;
 import com.ics.likeplayer.Model.AllVideos;
 import com.ics.likeplayer.Model.PojoClass;
@@ -73,14 +76,43 @@ public class MyAllVideosAdpter extends RecyclerView.Adapter<MyAllVideosAdpter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext() , PlayVideoActivity.class);
+//                Intent intent = new Intent(v.getContext() , PlayVideoActivity.class);
+                Intent intent = new Intent(v.getContext() , PlayJavaVideoActivity.class);
                 intent.putExtra("vidurl" , ""+pojoClassArrayList.get(position).getPath());
+                intent.putExtra("slevidname" , ""+pojoClassArrayList.get(position).getName());
                 v.getContext().startActivity(intent);
+            }
+        });
+        holder.options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "fdhugf", Toast.LENGTH_SHORT).show();
+                showsitdialog(v);
             }
         });
 //        holder.singer_name.setText(pojoClassArrayList.get(position).getSinger_name());
 //        holder.time.setText(pojoClassArrayList.get(position).getTime());
 
+    }
+
+    private void showsitdialog(View v) {
+
+        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
+        ViewGroup viewGroup = v.findViewById(android.R.id.content);
+
+        //then we will inflate the custom alert dialog xml that we created
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.famousdialog, viewGroup, false);
+
+
+        //Now we need an AlertDialog.Builder object
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        //setting the view of the builder to our custom view that we already inflated
+        builder.setView(dialogView);
+
+        //finally creating the alert dialog and displaying it
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -93,7 +125,7 @@ public class MyAllVideosAdpter extends RecyclerView.Adapter<MyAllVideosAdpter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView song_name,singer_name,time;
-        ImageView vidthm;
+        ImageView vidthm,options;
 
         public ViewHolder(View view) {
             super(view);
@@ -101,6 +133,7 @@ public class MyAllVideosAdpter extends RecyclerView.Adapter<MyAllVideosAdpter.Vi
             song_name =  view.findViewById(R.id.song_name);
             vidthm =  view.findViewById(R.id.vidthm);
             time =  view.findViewById(R.id.time);
+            options =  view.findViewById(R.id.options);
 
         }
     }

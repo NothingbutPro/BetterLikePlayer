@@ -26,19 +26,19 @@ import java.util.ArrayList
 
 
 class HomeFragment : Fragment() {
-    private  var paths: String = ""
-     var p :Int = 0
+    private lateinit var dir: DIrectories_Folders
+    private var paths: String = ""
+    var p: Int = 0
     private lateinit var DIrSOngss: Array<File>
-    var pojoClassArrayList : ArrayList<PojoClass>  = ArrayList()
-    var DirectoriesList : ArrayList<DIrectories_Folders>  = ArrayList()
-//    lateinit var DIrSOngss : ArrayList<Files>  = ArrayList()
-    lateinit var fileuri : String
-    lateinit var prevfileuri : String
-    lateinit var filesuri:String
-//      var paths:String
-      var DIrnames:String =""
-    lateinit  var DIrAddresss:String
-//    lateinit  var DIrSOngss:String
+    var pojoClassArrayList: ArrayList<PojoClass> = ArrayList()
+    var DirectoriesList: ArrayList<DIrectories_Folders> = ArrayList()
+    lateinit var fileuri: String
+    lateinit var prevfileuri: String
+    var No_of_Songs: Int =0
+    //      var paths:String
+    var DIrnames: String = ""
+    lateinit var DIrAddresss: String
+    //    lateinit  var DIrSOngss:String
 //    private lateinit var pojoClassArrayList: ArrayList<PojoClass>
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var Songrec: RecyclerView
@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
     private lateinit var arttist: TextView
     private var myAllVideosAdpter: MyAllVideosAdpter? = null
     private var AllDirectoriesAdapter: AllDirectoriesAdapter? = null
-//    public
+    //    public
     //      var mp3Files = null;
     private val song_name = arrayOf(
         "Treat You Better"
@@ -58,11 +58,13 @@ class HomeFragment : Fragment() {
 
         "Shawn Mendis"
     )
-    private val time = arrayOf("2:22", "4:21", "2:58", "2:28", "5:39", "3:12")
+
+    //    private val time = arrayOf("2:22", "4:21", "2:58", "2:28", "5:39", "3:12")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
@@ -74,9 +76,9 @@ class HomeFragment : Fragment() {
 //            textView.text = it
 //        })
 
-   //     readmp3mediafiles(activity);
+        //     readmp3mediafiles(activity);
         readmp4mediafiles(activity);
-    //    scanDeviceForMp3Files(activity)
+        //    scanDeviceForMp3Files(activity)
 
         return root
     }
@@ -87,46 +89,45 @@ class HomeFragment : Fragment() {
         val uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
 //        val music = MediaStore.Video.Media.DISPLAY_NAME + " != 0"
         val sort = MediaStore.Video.Media.ALBUM + " ASC"
-//        val projection = arrayOf(
-//            MediaStore.Audio.Albums.ALBUM_ID,
-//            MediaStore.Audio.Media.TITLE,
-//            MediaStore.Audio.Media.DATA
-//        )
+
         val cursor = contentResolver?.query(uri, null, null, null, sort)
         if (cursor != null) {
             //   Msg.log(String.valueOf(cursor.count))
             Log.e("Video cusror", "COunt is" + cursor.count)
             if (cursor.count > 0) {
                 while (cursor.moveToNext()) {
+                    No_of_Songs =0;
                     val path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
                     val DIrname = File(path).parentFile.name
                     val DIrAddress = File(path).parentFile.absolutePath
                     val DIrSOngs = File(path).parentFile.listFiles()
-                    if(DIrnames.equals(DIrSOngs.get(0).parentFile.name))
-                    {
-
+                    if (DIrnames.equals(DIrSOngs.get(0).parentFile.name)) {
                         p = cursor.position;
-                    }
-                    else
-                    {
-                        p=0;
-                        DIrnames =DIrname
-
+                    } else {
+                        p = 0;
+                        DIrnames = DIrname
                     }
 
+//                    val title =
+//                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
                     val title =
-                        cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-                    Toast.makeText(activity,"Title is"+DIrname ,Toast.LENGTH_LONG).show()
+                        File(path).parentFile.listFiles().size
+                    Toast.makeText(activity, "Title is" + DIrname, Toast.LENGTH_LONG).show()
                     //for getting directories
 
                     if (path != null && path!!.endsWith(".mp4")) {
-                        if(p ==0)
-                        {
-                            val   dir = DIrectories_Folders(DIrname ,DIrAddress, DIrSOngs.size.toString());
-                            DirectoriesList.add(p ,dir)
-                       //     Log.e("homefrag" , ""+DIrSOngs.get(cursor.position))
-                        }
-                        else{
+                        if (p == 0) {
+                            No_of_Songs = No_of_Songs +1;
+                             dir =
+                                DIrectories_Folders(DIrname, DIrAddress, DIrSOngs.size.toString());
+                            Log.e("Songs size is",""+DIrSOngs.size.toString())
+
+                            DirectoriesList.add( dir)
+//                            dir.no_of_SOngs = 20;
+                            //     Log.e("homefrag" , ""+DIrSOngs.get(cursor.position))
+                        } else {
+                            No_of_Songs = No_of_Songs +1;
+
 //                            val   dir = DIrectories_Folders(DIrname ,DIrAddress, DIrSOngs.size.toString());
 //                            DirectoriesList.add(cursor.position ,dir)
 //                            Log.e("homefrag else" , ""+DIrSOngs.get(cursor.position))
@@ -144,14 +145,16 @@ class HomeFragment : Fragment() {
 //                                p == 1;
 //                            }
 //                        }
-
-                    }else{
-                        Log.e("homefrag else else wa" , ""+DIrSOngs.get(p))
+//                        dir.no_of_SOngs = No_of_Songs.toString();
+                    } else {
+                        Log.e("homefrag else else wa", "else DIrSOngs.get(p)")
                     }
+//                    DirectoriesList.set(cursor.position , )
                 }
                 AllDirectoriesAdapter = AllDirectoriesAdapter(activity, DirectoriesList)
                 //  mLayoutManager = LinearLayoutManager(context)
-                Songrec.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                Songrec.layoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
                 //    songrec.setLayoutManager(mLayoutManager)
                 Songrec.setItemAnimator(DefaultItemAnimator())
                 Songrec.setAdapter(AllDirectoriesAdapter)
@@ -450,9 +453,3 @@ class HomeFragment : Fragment() {
 
 }
 
-
-
-//private operator fun Nothing?.iterator(): Iterator<String> {
-//    return  iterator()
-//
-//}
