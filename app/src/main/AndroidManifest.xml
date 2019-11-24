@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,21 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FurtherActivity.PlayMp3VideoActivity"></activity>
+        <activity android:name=".Basic.Facultypermission"></activity>
+        <activity android:name=".FurtherActivity.PlayMp3VideoActivity" />
         <activity
             android:name=".FurtherActivity.PlayVideoActivity"
-            android:screenOrientation="landscape"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
+            android:screenOrientation="landscape"
             android:supportsPictureInPicture="true"
-            android:configChanges=
-                "screenSize|smallestScreenSize|screenLayout|orientation"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-<!--            <layout android:defaultHeight="500dp"-->
-<!--                android:defaultWidth="600dp"-->
-<!--                android:gravity="top|end"-->
-<!--                android:minHeight="450dp"-->
-<!--                android:minWidth="300dp" />-->
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
+            <!-- <layout android:defaultHeight="500dp" -->
+            <!-- android:defaultWidth="600dp" -->
+            <!-- android:gravity="top|end" -->
+            <!-- android:minHeight="450dp" -->
+            <!-- android:minWidth="300dp" /> -->
 
         </activity>
         <activity android:name=".FurtherActivity.AllVideoActivity" />
